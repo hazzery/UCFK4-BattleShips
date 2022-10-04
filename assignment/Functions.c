@@ -11,11 +11,8 @@
 
 static void place_ship(Ship_t ship)
 {
-    // Get new readings from navswitch
-    navswitch_update();
-
     // While navswitch isn't pushed in
-    while (navswitch_up_p(NAVSWITCH_PUSH)) {
+    if (navswitch_up_p(NAVSWITCH_PUSH)) {
 
         // Read navswitch values
         int8_t ship_start_row = ship.start_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
@@ -30,7 +27,6 @@ static void place_ship(Ship_t ship)
             ship.start_pos.col = ship_start_col;
 
         display_pixel_set(ship.start_pos.col, ship.start_pos.row, 1);
-
     }
 }
 
@@ -38,6 +34,7 @@ void place_ships()
 {
     Ship_t ships[NUM_SHIPS];
 
+    // TODO: make this not a for loop somehow
     for (uint8_t i = 0; i < NUM_SHIPS; i++) {
         place_ship(ships[i]);
     }
