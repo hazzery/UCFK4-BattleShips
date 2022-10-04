@@ -9,4 +9,3 @@ doc          --- documentation
 etc          --- miscellaneous scripts and makefile templates
 fonts        --- fonts and font creation program
 utils        --- utility modules
-labs         --- contains the laboratory exercises
