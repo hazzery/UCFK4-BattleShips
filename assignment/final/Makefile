@@ -16,28 +16,28 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h
+game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/ledmat.h ../../drivers/led.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-navswitch.o: ../../drivers/navswitch.c ../../drivers/navswitch.h
+navswitch.o: ../../drivers/navswitch.c ../../drivers/avr/system.h ../../drivers/navswitch.h ../../drivers/avr/delay.h ../../drivers/avr/pio.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-ledmat.o: ../../drivers/ledmat.c ../../drivers/ledmat.h
+ledmat.o: ../../drivers/ledmat.c ../../drivers/avr/system.h ../../drivers/avr/pio.h ../../drivers/ledmat.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-display.o: ../../drivers/display.c ../../drivers/display.h
+display.o: ../../drivers/display.c ../../drivers/avr/system.h ../../drivers/ledmat.h ../../drivers/display.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-led.o: ../../drivers/led.c ../../drivers/led.h
+led.o: ../../drivers/led.c ../../drivers/avr/system.h ../../drivers/avr/pio.h ../../drivers/led.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 board.o: ../Board.c ../Board.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-functions.o: ../Functions.c ../Functions.h
+functions.o: ../Functions.c ../../drivers/navswitch.h ../Functions.h ../Ship.h ../Board.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 

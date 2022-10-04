@@ -9,8 +9,9 @@ INCDIRS=. .. ../../drivers ../../drivers/avr ../../utils ../../fonts
 
 CC=avr-gcc
 OPT=-00
-DEPFLAGS=-MP -MD
-CFLAGS = -mmcu=atmega32u2 -Os -Wall -Wstrict-prototypes -Wextra -g $(foreach Dir,$(INCDIRS),-I$(Dir))
+#DEPFLAGS=-MP -MD
+DEPFLAGS=-MMD
+CFLAGS = -mmcu=atmega32u2 -Os -Wall -Wstrict-prototypes -Wextra -g $(DEPFLAGS) $(foreach Dir,$(INCDIRS),-I$(Dir))
 
 CFILES=$(foreach Dir,$(CODEDIRS),$(wildcard $(Dir)/*.c))
 OBJECTS=$(patsubst %.c,%.o,$(CFILES))
@@ -40,7 +41,7 @@ clean:
 
 # Target: program project.
 .PHONY: program
-program: game.out
+program: $(BINARY)
 	$(OBJCOPY) -O ihex game.out game.hex
 	dfu-programmer atmega32u2 erase; dfu-programmer atmega32u2 flash game.hex; dfu-programmer atmega32u2 start
 
