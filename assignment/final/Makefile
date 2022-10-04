@@ -22,10 +22,30 @@ game.o: game.c ../../drivers/avr/system.h
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+navswitch.o: ../../drivers/navswitch.c ../../drivers/navswitch.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+ledmat.o: ../../drivers/ledmat.c ../../drivers/ledmat.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+display.o: ../../drivers/display.c ../../drivers/display.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+led.o: ../../drivers/led.c ../../drivers/led.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+board.o: ../Board.c ../Board.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+functions.o: ../Functions.c ../Functions.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+
+
 
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o board.o functions.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
