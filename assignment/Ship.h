@@ -17,4 +17,6 @@ typedef struct ship_s {
     bool placed_horizontally;
 } Ship_t;
 
+extern Ship_t ships[NUM_SHIPS];
+
 #endif //ENCE260_ASSIGNMENT_SHIP_H

@@ -26,7 +26,7 @@ int main (void)
         navswitch_update();
 
         if (is_placing_ships) {
-            place_ships();
+            is_placing_ships = place_ships();
         } else {
             win_check(); // wait for other player
             shot_pos = take_aim();

@@ -7,7 +7,7 @@
 
 #include "Position.h"
 
-extern void place_ships(void);
+extern bool place_ships(void);
 extern Pos_t take_aim(void);
 extern void fire(Pos_t pos);
 extern void win_check(void);

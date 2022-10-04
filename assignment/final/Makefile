@@ -40,12 +40,15 @@ board.o: ../Board.c ../Board.h
 functions.o: ../Functions.c ../../drivers/navswitch.h ../Functions.h ../Ship.h ../Board.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+ship.o: ../Ship.c ../Ship.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
 
 
 
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o navswitch.o ledmat.o display.o led.o board.o functions.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o board.o functions.o ship.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 

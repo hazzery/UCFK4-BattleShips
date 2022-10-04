@@ -5,9 +5,11 @@
 #ifndef ENCE260_ASSIGNMENT_POSITION_H
 #define ENCE260_ASSIGNMENT_POSITION_H
 
+#include <stdint.h>
+
 typedef struct position_s {
-    unsigned int row : 4;
-    unsigned int col : 4;
+    uint8_t row;
+    uint8_t col;
 } Pos_t;
 
 #endif //ENCE260_ASSIGNMENT_POSITION_H

@@ -30,17 +30,19 @@ static void place_ship(Ship_t ship)
     }
 }
 
-void place_ships()
+bool place_ships(void)
 {
-    Ship_t ships[NUM_SHIPS];
+    static uint8_t ships_placed = 0;
+//    static int8_t prev_ships_placed = -1;
 
-    // TODO: make this not a for loop somehow
-    for (uint8_t i = 0; i < NUM_SHIPS; i++) {
-        place_ship(ships[i]);
-    }
+//    if (prev_ships_placed != ships_placed)
+    place_ship(ships[ships_placed]);
+
+
+    return ships_placed == NUM_SHIPS;
 }
 
-Pos_t take_aim()
+Pos_t take_aim(void)
 {
     // Shot initial position is top left corner
     Pos_t shot_pos = {.row = 0, .col = 0};
@@ -80,7 +82,7 @@ void fire(Pos_t pos)
         board_set(pos, Miss);
     }
 }
-void win_check()
+void win_check(void)
 {
 
 }
