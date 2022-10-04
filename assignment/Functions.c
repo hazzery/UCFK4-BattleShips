@@ -18,8 +18,8 @@ static void place_ship(Ship_t ship)
     while (navswitch_up_p(NAVSWITCH_PUSH)) {
 
         // Read navswitch values
-        int8_t ship_start_row = shot_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
-        int8_t ship_start_col = shot_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
+        int8_t ship_start_row = ship.start_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
+        int8_t ship_start_col = ship.start_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
 
         // If row value actually on the LED matrix, update position
         if (ship_start_row >= 0 && ship_start_row <= BOARD_HEIGHT)
@@ -48,11 +48,11 @@ Pos_t take_aim()
     // Shot initial position is top left corner
     Pos_t shot_pos = {.row = 0, .col = 0};
 
-    // Get new readings from navswitch
-    navswitch_update();
 
     // While navswitch isn't pushed in
     while (navswitch_up_p(NAVSWITCH_PUSH)) {
+        // Get new readings from navswitch
+        navswitch_update();
         led_set(0, 1);
 
         // Read navswitch values
@@ -68,7 +68,7 @@ Pos_t take_aim()
             shot_pos.col = shot_col;
 
         display_pixel_set(shot_pos.col, shot_pos.row, 1);
-
+        display_update();
     }
     //placement is confirmed
     return shot_pos;
