@@ -6,6 +6,15 @@
 #include "../../utils/pacer.h"
 #include "../Functions.h"
 
+typedef enum game_state_e {
+    Placing_Ships,
+    Waiting,
+    Aiming,
+    Firing
+} Game_State_t;
+
+Game_State_t currentState = Placing_Ships;
+
 int main (void)
 {
     system_init();
@@ -13,7 +22,6 @@ int main (void)
     led_init();
     pacer_init(120); // Initialize pacer to 12Hz
 
-    bool is_placing_ships = true;
     Pos_t shot_pos = {.row = 0, .col = 0};
 
 // Dominic, please ignore these pragma lines, it makes my IDE happy
@@ -25,12 +33,19 @@ int main (void)
         // Get new readings from navswitch
         navswitch_update();
 
-        if (is_placing_ships) {
-            is_placing_ships = place_ships();
-        } else {
-            win_check(); // wait for other player
-            shot_pos = take_aim();
-            fire(shot_pos);
+        switch (currentState) {
+            case Placing_Ships:
+                place_ships();
+                break;
+            case Waiting:
+                win_check();
+                break;
+            case Aiming:
+                shot_pos = take_aim();
+                break;
+            case Firing:
+                fire(shot_pos);
+                break;
         }
 
         // Refresh the matrix display
