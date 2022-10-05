@@ -30,6 +30,11 @@ static void place_ship(Ship_t ship)
     }
 }
 
+/**
+ * @brief Controlls the placement of all `NUM_SHIPS` ships
+ *
+ * @return `true` if all ships have been placed, otherwise `false`
+ */
 bool place_ships(void)
 {
     static uint8_t ships_placed = 0;
