@@ -7,13 +7,19 @@
 
 #include <stdint.h>
 #include "Position.h"
-#include "State.h"
 
 #define BOARD_WIDTH 5
 #define BOARD_HEIGHT 7
 
-extern State_t board_get(Pos_t pos);
-extern void board_set(Pos_t pos, State_t state);
+typedef enum cell_state_e {
+    Empty,
+    Ship,
+    Hit,
+    Miss
+} Cell_State_t;
+
+extern Cell_State_t board_get(Pos_t pos);
+extern void board_set(Pos_t pos, Cell_State_t state);
 
 
 

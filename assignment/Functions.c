@@ -6,8 +6,8 @@
 #include "../drivers/display.h"
 #include "../drivers/led.h"
 #include "Functions.h"
-#include "Ship.h"
 #include "Board.h"
+#include "Ship.h"
 
 static void place_ship(Ship_t ship)
 {
@@ -75,7 +75,7 @@ Pos_t take_aim(void)
 
 void fire(Pos_t pos)
 {
-    State_t board_state = board_get(pos);
+    Cell_State_t board_state = board_get(pos);
     if (board_state == Ship) {
         board_set(pos, Hit);
     } else if (board_state == Empty) {

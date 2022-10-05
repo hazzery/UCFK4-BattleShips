@@ -5,7 +5,7 @@
 
 # Definitions.
 CC = avr-gcc
-CFLAGS = -mmcu=atmega32u2 -Os -Wall -Wstrict-prototypes -Wextra -g -I. -I../../utils -I../../fonts -I../../drivers -I../../drivers/avr
+CFLAGS = -mmcu=atmega32u2 -Os -Wall -Wstrict-prototypes -Wextra -g -I. -I.. -I../../utils -I../../fonts -I../../drivers -I../../drivers/avr
 OBJCOPY = avr-objcopy
 SIZE = avr-size
 DEL = rm
@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/ledmat.h ../../drivers/led.h
+game.o: game.c ../../drivers/avr/system.h ../../drivers/navswitch.h ../../drivers/display.h ../../drivers/ledmat.h ../../drivers/led.h ../../utils/pacer.h ../Functions.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
@@ -34,10 +34,16 @@ display.o: ../../drivers/display.c ../../drivers/avr/system.h ../../drivers/ledm
 led.o: ../../drivers/led.c ../../drivers/avr/system.h ../../drivers/avr/pio.h ../../drivers/led.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-board.o: ../Board.c ../Board.h
+pacer.o: ../../utils/pacer.c ../../drivers/avr/system.h ../../drivers/avr/timer.h ../../utils/pacer.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-functions.o: ../Functions.c ../../drivers/navswitch.h ../Functions.h ../Ship.h ../Board.h
+timer.o: ../../drivers/avr/timer.c ../../drivers/avr/system.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+board.o: ../Board.c ../Board.h ../Position.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ship.o: ../Ship.c ../Ship.h
@@ -45,10 +51,8 @@ ship.o: ../Ship.c ../Ship.h
 
 
 
-
-
 # Link: create ELF output file from object files.
-game.out: game.o system.o navswitch.o ledmat.o display.o led.o board.o functions.o ship.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o board.o functions.o ship.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
