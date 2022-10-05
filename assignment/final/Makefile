@@ -40,10 +40,16 @@ pacer.o: ../../utils/pacer.c ../../drivers/avr/system.h ../../drivers/avr/timer.
 timer.o: ../../drivers/avr/timer.c ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+tinygl.o: ../../utils/tinygl.c ../../drivers/avr/system.h ../../utils/tinygl.h ../../drivers/display.h ../../utils/font.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+font.o: ../../utils/font.c ../../utils/font.h ../../drivers/avr/system.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
 board.o: ../Board.c ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h
+functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../utils/tinygl.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ship.o: ../Ship.c ../Ship.h
@@ -52,7 +58,7 @@ ship.o: ../Ship.c ../Ship.h
 
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o board.o functions.o ship.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o board.o functions.o ship.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
