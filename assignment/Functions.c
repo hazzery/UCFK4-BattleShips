@@ -69,7 +69,7 @@ static void set_ship(Ship_t ship)
 /**
  * @brief Controls the placing of an individual ship onto the board
  *
- * This function must be called repeatedly untill all ships have been placed
+ * This function must be called repeatedly until all ships have been placed
  *
  * @param ship The ship to be placed on the board
  */
@@ -87,6 +87,7 @@ static bool place_ship(Ship_t ship)
     int8_t ship_start_row = ship.start_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
     int8_t ship_start_col = ship.start_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
 
+    //Ensure the ship's head is actually on the grid
     ship.start_pos = move_to_board(ship_start_row, ship_start_col);
 
     Pos_t ship_end = ship_end_pos(ship);
@@ -100,7 +101,7 @@ static bool place_ship(Ship_t ship)
 }
 
 /**
- * @brief Controlls the placement of all `NUM_SHIPS` ships
+ * @brief Controls the placement of all `NUM_SHIPS` ships
  *
  * @return `true` if all ships have been placed, otherwise `false`
  */
@@ -108,11 +109,20 @@ bool place_ships(void)
 {
     static uint8_t ships_placed = 0;
 
+    // Ship counter is incremented if place_ship returns true
     ships_placed += place_ship(ships[ships_placed]);
 
     return ships_placed == NUM_SHIPS;
 }
 
+/**
+ * @brief Allows player to choose where to fire their missile
+ *
+ * Croshair begins at top left corner, and is moved with the navswitch
+ * pressing the navswitch down confirms the position to fire at
+ *
+ * @return The position selected by the user
+ */
 Pos_t take_aim(void)
 {
     // Shot initial position is top left corner
@@ -144,6 +154,14 @@ Pos_t take_aim(void)
     return shot_pos;
 }
 
+/**
+ * @brief "Fires" a "missile" at the oppositions game board
+ *
+ * Gets the current state of the oppositions board at the given position
+ * and updates the state accordingly
+ *
+ * @param pos The position on the opposition's board to fire at
+ */
 void fire(Pos_t pos)
 {
     Cell_State_t board_state = board_get(pos);
@@ -153,6 +171,7 @@ void fire(Pos_t pos)
         board_set(pos, Miss);
     }
 }
+
 void win_check(void)
 {
 

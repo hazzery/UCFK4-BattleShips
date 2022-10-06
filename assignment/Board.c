@@ -28,6 +28,12 @@ void board_set(Pos_t pos, Cell_State_t state)
     board[pos.row][pos.col] = state;
 }
 
+/**
+ * @brief  Checks if the given position is visible on the 5x7 grid
+ *
+ * @param pos The position to check
+ * @return `true` if the position is on the board, otherwise `false`
+ */
 bool is_on_board(Pos_t pos)
 {
     if (pos.row > BOARD_HEIGHT - 1)
@@ -39,6 +45,17 @@ bool is_on_board(Pos_t pos)
     return true;
 }
 
+/**
+ * @brief Moves the given position to its nearest position on the board if it was not
+ *
+ * Essentially just forces the coordinates onto the bounds of the board.
+ * Moves negative ordinates to 0, or large ordinates to BOARD_HEIGHT/WIDTH.
+ * Used to prevent user from firing / placing a ship off of the board.
+ *
+ * @param row the row to be moved
+ * @param col the column to be moved
+ * @return a `Pos_t` of the nearest board position to the given coordinates
+ */
 Pos_t move_to_board(int8_t row, int8_t col)
 {
     if (row < 0)
