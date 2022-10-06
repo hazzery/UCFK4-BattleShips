@@ -14,7 +14,10 @@ Cell_State_t board[BOARD_HEIGHT][BOARD_WIDTH];
  */
 Cell_State_t board_get(Pos_t pos)
 {
-    return board[pos.row][pos.col];
+    if(is_on_board(pos)) {
+        return board[pos.row][pos.col];
+    }
+    return Empty;
 }
 
 /**
