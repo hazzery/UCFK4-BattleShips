@@ -1,11 +1,26 @@
-ENCE260 Embedded Systems Lab work completed by Harrison Parkes - hpa101
+ENCE260 Assignment - UC Fun Kit 4
+Code written by Harrison Parkes
 
-The directory structure is:
-apps         --- contains a sub-directory for each application
-drivers      --- device driver modules (hardware independent)
-drivers/avr  --- device driver modules specifically for AVR architecture
-drivers/test --- device driver modules for test scaffold
-doc          --- documentation
-etc          --- miscellaneous scripts and makefile templates
-fonts        --- fonts and font creation program
-utils        --- utility modules
+-----------------------------------------------------------------------------------------------------
+Battle Ships
+-----------------------------------------------------------------------------------------------------
+Game opens to ship placement mode. Use the navswitch to move the ship to the desired position.
+To toggle the ship between being placed vertically and horizontally, press Button1.
+Once you are happy with the ship's placement, press down on the navswitch to confirm it's placement.
+Repeat this process for the next three ships. Placing the last ship will clear the screen.
+
+Once all ships are placed, place both Funk Kits together ready for Infra-Red communications.
+The player that wishes to play first must press Button1 to confirm both players are ready.
+This person is now referred to as Player1 from now on.
+The two Fun Kits will then exchange ship placement information.
+
+NOTE: Please Keep both Fun Kits in position for communications from this point on!
+
+Once communication is complete, Player1's Fun Kit will move into aiming state.
+The top left LED on the matrix will flash and the player can use the navswitch to choose where
+they would like to fire. To confirm position, press down on the navswitch.
+The LED will then stop flashing and will remain on until the game finishes.
+Player1's Fun Kit is now in waiting state and the navswitch will no longer do anything.
+
+This marks the end of Player1's turn, and will allow Player2 to have theirs.
+The game repeats as so until one person has hit all of the opposition's ships.
