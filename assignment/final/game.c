@@ -12,8 +12,9 @@ typedef enum game_state_e {
     Aiming,
     Firing
 } Game_State_t;
-
 Game_State_t currentState = Placing_Ships;
+
+bool isPlayerOne = false;
 
 int main (void)
 {
@@ -45,6 +46,8 @@ int main (void)
                 break;
             case Firing:
                 fire(shot_pos);
+                break;
+            default:
                 break;
         }
 
