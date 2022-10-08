@@ -73,32 +73,32 @@ static void set_ship(Ship_t ship)
  *
  * @param ship The ship to be placed on the board
  */
-static bool place_ship(Ship_t ship)
+static bool place_ship(Ship_t* ship)
 {
-    Ship_t ghost_ship = ship;
+    Ship_t ghost_ship = *ship;
 
     // Confirm ship placement on navswitch push
     if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
-        if (placement_is_valid(ship)) {
-            set_ship(ship);
+        if (placement_is_valid(*ship)) {
+            set_ship(*ship);
             return true;
         }
     }
 
     // Read navswitch values
-    int8_t ship_start_row = ship.start_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
-    int8_t ship_start_col = ship.start_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
+    int8_t ship_start_row = ship->start_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
+    int8_t ship_start_col = ship->start_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
 
     //Ensure the ship's head is actually on the grid
-    ship.start_pos = move_to_board(ship_start_row, ship_start_col);
+    ship->start_pos = move_to_board(ship_start_row, ship_start_col);
 
-    Pos_t ship_end = ship_end_pos(ship);
+    Pos_t ship_end = ship_end_pos(*ship);
     // If ship tail not on the LED matrix...
     if (!is_on_board(ship_end))
         return false;
 
     tinygl_draw_line(pos_to_point(ghost_ship.start_pos), pos_to_point(ship_end_pos(ghost_ship)), 0);
-    tinygl_draw_line(pos_to_point(ship.start_pos), pos_to_point(ship_end), 1);
+    tinygl_draw_line(pos_to_point(ship->start_pos), pos_to_point(ship_end), 1);
     return false;
 }
 
@@ -112,7 +112,7 @@ bool place_ships(void)
     static uint8_t ships_placed = 0;
 
     // Ship counter is incremented if place_ship returns true
-    ships_placed += place_ship(ships[ships_placed]);
+    ships_placed += place_ship(&(ships[ships_placed]));
 
     return ships_placed == NUM_SHIPS;
 }
