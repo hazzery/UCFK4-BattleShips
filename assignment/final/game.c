@@ -1,10 +1,8 @@
 #include "../../drivers/avr/system.h"
 #include "../../drivers/navswitch.h"
-//#include "../../drivers/display.h"
-#include "../../drivers/ledmat.h"
-//#include "../../drivers/led.h"
-#include "../../utils/pacer.h"
 #include "../../utils/tinygl.h"
+#include "../../drivers/led.h"
+#include "../../utils/pacer.h"
 #include "../Functions.h"
 
 // Dominic, please ignore these pragma lines, it makes my IDE happy
@@ -24,16 +22,15 @@ bool isPlayerOne = false;
 int main (void)
 {
     system_init();
-    ledmat_init();
-//    led_init();
-    pacer_init(120); // Initialize pacer to 12Hz
+    led_init();
+    tinygl_init (600);
+    pacer_init(600); // Initialize pacer to 12Hz
 
     Pos_t shot_pos = {.row = 0, .col = 0};
 
     while (1)
     {
-        // Get new readings from navswitch
-        navswitch_update();
+        navswitch_update(); // Get new readings from navswitch
 
         switch (currentState) {
             case Placing_Ships:
@@ -62,11 +59,8 @@ int main (void)
                 break;
         }
 
-        // Refresh the matrix display
-//        display_update();
-        tinygl_update();
-        // Wait for next pacer tick
-        pacer_wait();
+        tinygl_update(); // Refresh the matrix display
+        pacer_wait(); // Wait for next pacer tick
     }
 }
 #pragma clang diagnostic pop
