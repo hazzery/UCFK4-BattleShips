@@ -74,8 +74,33 @@ static void set_ship(Ship_t ship)
  * @param ship The ship to be placed on the board
  */
 static bool place_ship(Ship_t ship)
+//{
+//    // Confirm ship placement on navswitch push
+//    if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
+//        if (placement_is_valid(ship)) {
+//            set_ship(ship);
+//            return true;
+//        }
+//    }
+//
+//    // Read navswitch values
+//    int8_t ship_start_row = ship.start_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
+//    int8_t ship_start_col = ship.start_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
+//
+//    //Ensure the ship's head is actually on the grid
+//    ship.start_pos = move_to_board(ship_start_row, ship_start_col);
+//
+//    Pos_t ship_end = ship_end_pos(ship);
+//    // If ship tail not on the LED matrix...
+//    if (!is_on_board(ship_end))
+//        return false;
+//
+////    display_pixel_set(ship.start_pos.col, ship.start_pos.row, 1);
+//    tinygl_draw_line(pos_to_point(ship.start_pos), pos_to_point(ship_end), 1);
+//    return false;
+//}
 {
-    // While navswitch isn't pushed in
+    // Confirm ship placement on navswitch push
     if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
         if (placement_is_valid(ship)) {
             set_ship(ship);
@@ -123,36 +148,58 @@ bool place_ships(void)
  *
  * @return The position selected by the user
  */
-Pos_t take_aim(void)
+//Pos_t take_aim(void)
+//{
+//    // Shot initial position is top left corner
+//    Pos_t shot_pos = {.row = 0, .col = 0};
+//    static Pos_t prev_pos = {.row = 0, .col = 0};
+//
+//
+//    // While navswitch isn't pushed in
+//    while (navswitch_up_p(NAVSWITCH_PUSH)) {
+//        // Get new readings from navswitch
+//        navswitch_update();
+//
+//        // Read navswitch values
+//        int8_t shot_row = shot_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
+//        int8_t shot_col = shot_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
+//
+//        shot_pos = move_to_board(shot_row, shot_col);
+//
+//
+//        display_pixel_set(prev_pos.col, prev_pos.row, 0);
+//        display_pixel_set(shot_pos.col, shot_pos.row, 1);
+//        display_update();
+//
+//        prev_pos = shot_pos;
+//    }
+//    //placement is confirmed
+//    return shot_pos;
+//}
+bool take_aim(Pos_t* shot_pos)
 {
-    // Shot initial position is top left corner
-    Pos_t shot_pos = {.row = 0, .col = 0};
-
+    static Pos_t prev_pos = {.row = 0, .col = 0};
 
     // While navswitch isn't pushed in
-    while (navswitch_up_p(NAVSWITCH_PUSH)) {
-        // Get new readings from navswitch
-        navswitch_update();
-        led_set(0, 1);
-
-        // Read navswitch values
-        int8_t shot_row = shot_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
-        int8_t shot_col = shot_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
-
-        // If row value actually on the LED matrix, update position
-        if (shot_row >= 0 && shot_row <= BOARD_HEIGHT)
-            shot_pos.row = shot_row;
-
-        // If column value actually on the LED matrix, update position
-        if (shot_col >= 0 && shot_col <= BOARD_WIDTH)
-            shot_pos.col = shot_col;
-
-        display_pixel_set(shot_pos.col, shot_pos.row, 1);
-        display_update();
+    if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
+        return true;
     }
-    //placement is confirmed
-    return shot_pos;
+
+    // Read navswitch values
+    int8_t shot_row = shot_pos->row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
+    int8_t shot_col = shot_pos->col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
+
+    *shot_pos = move_to_board(shot_row, shot_col);
+
+
+    display_pixel_set(prev_pos.col, prev_pos.row, 0);
+    display_pixel_set(shot_pos->col, shot_pos->row, 1);
+
+    prev_pos = *shot_pos;
+
+    return false;
 }
+
 
 /**
  * @brief "Fires" a "missile" at the oppositions game board

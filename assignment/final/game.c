@@ -1,11 +1,16 @@
 #include "../../drivers/avr/system.h"
 #include "../../drivers/navswitch.h"
-#include "../../drivers/display.h"
+//#include "../../drivers/display.h"
 #include "../../drivers/ledmat.h"
-#include "../../drivers/led.h"
+//#include "../../drivers/led.h"
 #include "../../utils/pacer.h"
+#include "../../utils/tinygl.h"
 #include "../Functions.h"
 
+// Dominic, please ignore these pragma lines, it makes my IDE happy
+// because generally having an infinite loop is a bad thing
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
 typedef enum game_state_e {
     Placing_Ships,
     Waiting,
@@ -20,15 +25,11 @@ int main (void)
 {
     system_init();
     ledmat_init();
-    led_init();
+//    led_init();
     pacer_init(120); // Initialize pacer to 12Hz
 
     Pos_t shot_pos = {.row = 0, .col = 0};
 
-// Dominic, please ignore these pragma lines, it makes my IDE happy
-// because generally having an infinite loop is a bad thing
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "EndlessLoop"
     while (1)
     {
         // Get new readings from navswitch
@@ -36,25 +37,36 @@ int main (void)
 
         switch (currentState) {
             case Placing_Ships:
-                place_ships();
+                if (place_ships()) {
+                    currentState = Waiting;
+                }
                 break;
+
             case Waiting:
                 win_check();
                 break;
+
             case Aiming:
-                shot_pos = take_aim();
+                if (take_aim(&shot_pos)) {
+                    currentState = Firing;
+                }
                 break;
+
             case Firing:
                 fire(shot_pos);
+                currentState = Waiting;
                 break;
+
             default:
+                currentState = Waiting;
                 break;
         }
 
         // Refresh the matrix display
-        display_update();
+//        display_update();
+        tinygl_update();
         // Wait for next pacer tick
         pacer_wait();
     }
-#pragma clang diagnostic pop
 }
+#pragma clang diagnostic pop
