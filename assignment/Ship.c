@@ -8,7 +8,7 @@ Ship_t ships[NUM_SHIPS] = {
     {.length = 4, .placed_horizontally = false},
     {.length = 3, .placed_horizontally = false},
     {.length = 2, .placed_horizontally = false},
-    {.length = 1, .placed_horizontally = false}
+    {.length = 2, .placed_horizontally = false}
 };
 
 /**
@@ -25,7 +25,7 @@ Ship_t ships[NUM_SHIPS] = {
 Pos_t ship_end_pos(Ship_t ship)
 {
     if (ship.placed_horizontally)
-        return (Pos_t){ship.start_pos.row + ship.length - 1, ship.start_pos.col};
-    else
         return (Pos_t){ship.start_pos.row, ship.start_pos.col + ship.length - 1};
+    else
+        return (Pos_t){ship.start_pos.row + ship.length - 1, ship.start_pos.col};
 }

@@ -19,7 +19,7 @@
  */
 static inline tinygl_point_t pos_to_point(Pos_t pos)
 {
-    return (tinygl_point_t){pos.row, pos.col};
+    return (tinygl_point_t){pos.col, pos.row};
 }
 
 /**
