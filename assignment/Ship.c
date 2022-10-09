@@ -24,8 +24,9 @@ Ship_t ships[NUM_SHIPS] = {
  */
 Pos_t ship_end_pos(Ship_t ship)
 {
-    if (ship.placed_horizontally)
+    if (ship.placed_horizontally) {
         return (Pos_t){ship.start_pos.row, ship.start_pos.col + ship.length - 1};
-    else
+    } else {
         return (Pos_t){ship.start_pos.row + ship.length - 1, ship.start_pos.col};
+    }
 }

@@ -22,6 +22,33 @@ static inline tinygl_point_t pos_to_point(Pos_t pos)
     return (tinygl_point_t){pos.col, pos.row};
 }
 
+void shift_ship(Ship_t* ship, int8_t delta_row, int8_t delta_col)
+{
+    Pos_t ship_tail = ship_end_pos(*ship);
+    int8_t new_row = ship_tail.row + delta_row;
+    if (new_row < 0 || new_row > BOARD_HEIGHT - 1) {
+        return;
+    }
+
+    int8_t new_col = ship_tail.col + delta_col;
+    if (new_col < 0 || new_col > BOARD_WIDTH - 1) {
+        return;
+    }
+
+    new_row = ship->start_pos.row + delta_row;
+    if (new_row < 0 || new_row > BOARD_HEIGHT - 1) {
+        return;
+    }
+
+    new_col = ship->start_pos.col + delta_col;
+    if (new_col < 0 || new_col > BOARD_WIDTH - 1) {
+        return;
+    }
+
+
+    ship->start_pos = (Pos_t){.row = new_row, .col = new_col};
+}
+
 /**
  * @brief checks to see if the current position of `ship` overlaps with the position of any other ships
  *
@@ -75,7 +102,7 @@ static void set_ship(Ship_t ship)
  */
 static bool place_ship(Ship_t* ship)
 {
-    Ship_t ghost_ship = *ship;
+    Ship_t prev_ship = *ship;
 
     // Confirm ship placement on navswitch push
     if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
@@ -85,20 +112,20 @@ static bool place_ship(Ship_t* ship)
         }
     }
 
-    // Read navswitch values
-    int8_t ship_start_row = ship->start_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
-    int8_t ship_start_col = ship->start_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
+//    // Read navswitch values
+    int8_t ship_delta_row = -(navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
+    int8_t ship_delta_col =   navswitch_push_event_p(NAVSWITCH_EAST)  - navswitch_push_event_p(NAVSWITCH_WEST);
 
-    //Ensure the ship's head is actually on the grid
-    ship->start_pos = move_to_board(ship_start_row, ship_start_col);
+    //Ensure the ship is actually on the grid
+    shift_ship(ship, ship_delta_row, ship_delta_col);
 
     Pos_t ship_end = ship_end_pos(*ship);
     // If ship tail not on the LED matrix...
     if (!is_on_board(ship_end))
         return false;
 
-    tinygl_draw_line(pos_to_point(ghost_ship.start_pos), pos_to_point(ship_end_pos(ghost_ship)), 0);
-    tinygl_draw_line(pos_to_point(ship->start_pos), pos_to_point(ship_end), 1);
+    tinygl_draw_line(pos_to_point(prev_ship.start_pos), pos_to_point(ship_end_pos(prev_ship)), 0);
+    tinygl_draw_line(pos_to_point(ship->start_pos), pos_to_point(ship_end_pos(*ship)), 1);
     return false;
 }
 
