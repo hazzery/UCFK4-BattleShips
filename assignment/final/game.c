@@ -1,9 +1,8 @@
 #include "../../drivers/avr/system.h"
 #include "../../drivers/navswitch.h"
-#include "../../utils/tinygl.h"
-#include "../../drivers/led.h"
 #include "../../utils/pacer.h"
 #include "../Functions.h"
+#include "../GhostGL.h"
 
 // Dominic, please ignore these pragma lines, it makes my IDE happy
 // because generally having an infinite loop is a bad thing
@@ -22,9 +21,8 @@ bool isPlayerOne = false;
 int main (void)
 {
     system_init();
-    led_init();
-    tinygl_init (600);
-    pacer_init(600); // Initialize pacer to 12Hz
+    ghostGL_init();
+    pacer_init(600); // Initialize pacer to 120Hz
 
     Pos_t shot_pos = {.row = 0, .col = 0};
 
@@ -59,7 +57,7 @@ int main (void)
                 break;
         }
 
-        tinygl_update(); // Refresh the matrix display
+        ghostGL_update(); // Refresh the matrix display
         pacer_wait(); // Wait for next pacer tick
     }
 }

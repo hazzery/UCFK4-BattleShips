@@ -3,24 +3,10 @@
 //
 
 #include "../drivers/navswitch.h"
-#include "../drivers/display.h"
-#include "../utils/tinygl.h"
-#include "../drivers/led.h"
+#include "GhostBoard.h"
 #include "Functions.h"
 #include "Board.h"
 #include "Ship.h"
-
-
-/**
- * @brief converts a Pos_t to an tinygl_point_t
- *
- * @param pos Pos_t object to convert
- * @return tinygl_point_t object
- */
-static inline tinygl_point_t pos_to_point(Pos_t pos)
-{
-    return (tinygl_point_t){pos.col, pos.row};
-}
 
 void shift_ship(Ship_t* ship, int8_t delta_row, int8_t delta_col)
 {
@@ -61,9 +47,9 @@ static bool placement_is_valid(Ship_t ship)
     for (uint8_t i = 0; i < ship.length; i++) {
 
         if (ship.placed_horizontally)
-            current_pos = (Pos_t){ship.start_pos.row + i, ship.start_pos.col};
-        else
             current_pos = (Pos_t){ship.start_pos.row, ship.start_pos.col + i};
+        else
+            current_pos = (Pos_t){ship.start_pos.row + i, ship.start_pos.col};
 
         if (board_get(current_pos) != Empty) {
             return false;
@@ -75,21 +61,26 @@ static bool placement_is_valid(Ship_t ship)
 /**
  * @brief Sets the position of `ship` into the cells of the game board
  *
- * DO NOT CALL THIS FUNCTION IF THE SHIP'S POSITION HAS NOT BEEN VALIDATED
+ * DO NOT CALL THIS FUNCTION WITHOUT GHOST MODE
+ * IF THE SHIP'S POSITION HAS NOT BEEN VALIDATED
  *
  * @param ship The ship to be placed on the board
  */
-static void set_ship(Ship_t ship)
+static void set_ship(Ship_t ship, bool ghost_mode)
 {
     Pos_t current_pos;
     for (uint8_t i = 0; i < ship.length; i++) {
 
         if (ship.placed_horizontally)
-            current_pos = (Pos_t){ship.start_pos.row + i, ship.start_pos.col};
+            current_pos = (Pos_t){ship.start_pos.row , ship.start_pos.col + i};
         else
-            current_pos = (Pos_t){ship.start_pos.row, ship.start_pos.col + i};
+            current_pos = (Pos_t){ship.start_pos.row + i, ship.start_pos.col};
 
-        board_set(current_pos, Ship);
+        if (!ghost_mode) {
+            board_set(current_pos, Ship);
+        } else {
+            ghost_set(current_pos, 1);
+        }
     }
 }
 
@@ -102,12 +93,10 @@ static void set_ship(Ship_t ship)
  */
 static bool place_ship(Ship_t* ship)
 {
-    Ship_t prev_ship = *ship;
-
     // Confirm ship placement on navswitch push
     if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
         if (placement_is_valid(*ship)) {
-            set_ship(*ship);
+            set_ship(*ship, false);
             return true;
         }
     }
@@ -119,13 +108,9 @@ static bool place_ship(Ship_t* ship)
     //Ensure the ship is actually on the grid
     shift_ship(ship, ship_delta_row, ship_delta_col);
 
-    Pos_t ship_end = ship_end_pos(*ship);
-    // If ship tail not on the LED matrix...
-    if (!is_on_board(ship_end))
-        return false;
+    ghost_wipe();
+    set_ship(*ship, true);
 
-    tinygl_draw_line(pos_to_point(prev_ship.start_pos), pos_to_point(ship_end_pos(prev_ship)), 0);
-    tinygl_draw_line(pos_to_point(ship->start_pos), pos_to_point(ship_end_pos(*ship)), 1);
     return false;
 }
 
@@ -182,8 +167,6 @@ bool place_ships(void)
 //}
 bool take_aim(Pos_t* shot_pos)
 {
-    static Pos_t prev_pos = {.row = 0, .col = 0};
-
     // While navswitch isn't pushed in
     if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
         return true;
@@ -196,10 +179,8 @@ bool take_aim(Pos_t* shot_pos)
     *shot_pos = move_to_board(shot_row, shot_col);
 
 
-    display_pixel_set(prev_pos.col, prev_pos.row, 0);
-    display_pixel_set(shot_pos->col, shot_pos->row, 1);
-
-    prev_pos = *shot_pos;
+    ghost_wipe();
+    ghost_set(*shot_pos, true);
 
     return false;
 }

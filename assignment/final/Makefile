@@ -49,16 +49,22 @@ font.o: ../../utils/font.c ../../utils/font.h ../../drivers/avr/system.h
 board.o: ../Board.c ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../utils/tinygl.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h
+functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../utils/tinygl.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h ../GhostBoard.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ship.o: ../Ship.c ../Ship.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+ghostBoard.o: ../GhostBoard.c ../GhostBoard.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+ghostGL.o: ../GhostGL.c ../GhostGL.h ../Board.h ../GhostBoard.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
 
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o board.o functions.o ship.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o board.o functions.o ship.o ghostBoard.o ghostGL.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
