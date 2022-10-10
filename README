@@ -20,6 +20,7 @@ Once communication is complete, Player1's Fun Kit will move into aiming state.
 The top left LED on the matrix will flash and the player can use the navswitch to choose where
 they would like to fire. To confirm position, press down on the navswitch.
 The LED will then stop flashing and will remain on until the game finishes.
+If the shot was a hit, the blue LED wil flash on for a short period.
 Player1's Fun Kit is now in waiting state and the navswitch will no longer do anything.
 
 This marks the end of Player1's turn, and will allow Player2 to have theirs.
