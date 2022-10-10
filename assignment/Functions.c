@@ -8,6 +8,13 @@
 #include "Board.h"
 #include "Ship.h"
 
+/**
+ * @brief Moves the start position of a ship by a given amount
+ *
+ * @param ship A pointer to the ship to be shifted
+ * @param delta_row The number of rows to shift by (can be negative)
+ * @param delta_col The number of columns to shift by (can be negative)
+ */
 void shift_ship(Ship_t* ship, int8_t delta_row, int8_t delta_col)
 {
     Pos_t ship_tail = ship_end_pos(*ship);
@@ -30,7 +37,6 @@ void shift_ship(Ship_t* ship, int8_t delta_row, int8_t delta_col)
     if (new_col < 0 || new_col > BOARD_WIDTH - 1) {
         return;
     }
-
 
     ship->start_pos = (Pos_t){.row = new_row, .col = new_col};
 }
