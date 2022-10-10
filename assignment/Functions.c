@@ -110,6 +110,14 @@ static bool place_ship(Ship_t* ship)
         }
     } else if (button_push_event_p(BUTTON1)) {
         ship->placed_horizontally = !ship->placed_horizontally;
+
+        Pos_t tail = ship_end_pos(*ship);
+
+        if (tail.col >= BOARD_WIDTH) {
+            ship->start_pos.col -= tail.col - (BOARD_WIDTH - 1);
+        } else if (tail.row >= BOARD_HEIGHT) {
+            ship->start_pos.row -= tail.row - (BOARD_HEIGHT - 1);
+        }
     }
 
     // Read navswitch values
