@@ -3,6 +3,7 @@
 //
 
 #include "../drivers/navswitch.h"
+#include "../drivers/button.h"
 #include "GhostBoard.h"
 #include "Functions.h"
 #include "Board.h"
@@ -105,14 +106,16 @@ static bool place_ship(Ship_t* ship)
             set_ship(*ship, false);
             return true;
         }
+    } else if (button_push_event_p(BUTTON1)) {
+        ship->placed_horizontally = !ship->placed_horizontally;
     }
 
-//    // Read navswitch values
-    int8_t ship_delta_row = -(navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
-    int8_t ship_delta_col =   navswitch_push_event_p(NAVSWITCH_EAST)  - navswitch_push_event_p(NAVSWITCH_WEST);
+    // Read navswitch values
+    int8_t delta_row = -(navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
+    int8_t delta_col =   navswitch_push_event_p(NAVSWITCH_EAST)  - navswitch_push_event_p(NAVSWITCH_WEST);
 
     //Ensure the ship is actually on the grid
-    shift_ship(ship, ship_delta_row, ship_delta_col);
+    shift_ship(ship, delta_row, delta_col);
 
     ghost_wipe();
     set_ship(*ship, true);

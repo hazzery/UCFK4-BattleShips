@@ -46,6 +46,9 @@ tinygl.o: ../../utils/tinygl.c ../../drivers/avr/system.h ../../utils/tinygl.h .
 font.o: ../../utils/font.c ../../utils/font.h ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+button.o: ../../drivers/button.c ../../drivers/avr/system.h ../../drivers/button.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
 board.o: ../Board.c ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
@@ -64,7 +67,7 @@ ghostGL.o: ../GhostGL.c ../GhostGL.h ../Board.h ../GhostBoard.h
 
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o board.o functions.o ship.o ghostBoard.o ghostGL.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o button.o board.o functions.o ship.o ghostBoard.o ghostGL.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
