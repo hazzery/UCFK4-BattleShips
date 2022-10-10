@@ -137,34 +137,6 @@ bool place_ships(void)
  *
  * @return The position selected by the user
  */
-//Pos_t take_aim(void)
-//{
-//    // Shot initial position is top left corner
-//    Pos_t shot_pos = {.row = 0, .col = 0};
-//    static Pos_t prev_pos = {.row = 0, .col = 0};
-//
-//
-//    // While navswitch isn't pushed in
-//    while (navswitch_up_p(NAVSWITCH_PUSH)) {
-//        // Get new readings from navswitch
-//        navswitch_update();
-//
-//        // Read navswitch values
-//        int8_t shot_row = shot_pos.row - (navswitch_push_event_p(NAVSWITCH_NORTH) - navswitch_push_event_p(NAVSWITCH_SOUTH));
-//        int8_t shot_col = shot_pos.col + navswitch_push_event_p(NAVSWITCH_EAST) - navswitch_push_event_p(NAVSWITCH_WEST);
-//
-//        shot_pos = move_to_board(shot_row, shot_col);
-//
-//
-//        display_pixel_set(prev_pos.col, prev_pos.row, 0);
-//        display_pixel_set(shot_pos.col, shot_pos.row, 1);
-//        display_update();
-//
-//        prev_pos = shot_pos;
-//    }
-//    //placement is confirmed
-//    return shot_pos;
-//}
 bool take_aim(Pos_t* shot_pos)
 {
     // While navswitch isn't pushed in

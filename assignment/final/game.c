@@ -4,10 +4,6 @@
 #include "../Functions.h"
 #include "../GhostGL.h"
 
-// Dominic, please ignore these pragma lines, it makes my IDE happy
-// because generally having an infinite loop is a bad thing
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "EndlessLoop"
 typedef enum game_state_e {
     Placing_Ships,
     Waiting,
@@ -61,4 +57,3 @@ int main (void)
         pacer_wait(); // Wait for next pacer tick
     }
 }
-#pragma clang diagnostic pop
