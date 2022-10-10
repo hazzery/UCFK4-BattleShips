@@ -1,3 +1,4 @@
+#include "../../drivers/avr/ir_uart.h"
 #include "../../drivers/avr/system.h"
 #include "../../drivers/navswitch.h"
 #include "../../drivers/button.h"
@@ -8,6 +9,7 @@
 
 typedef enum game_state_e {
     Placing_Ships,
+    Initializing,
     Waiting,
     Aiming,
     Firing
@@ -18,11 +20,12 @@ bool isPlayerOne = false;
 
 int main (void)
 {
-    system_init();
     led_init();
     button_init();
+    system_init();
+    ir_uart_init();
     ghostGL_init();
-    pacer_init(600); // Initialize pacer to 120Hz
+    pacer_init(120); // Initialize pacer to 120Hz
 
     led_set(LED1, 0);
 
@@ -41,19 +44,24 @@ int main (void)
                 }
                 break;
 
+            case Initializing:
+                swap_board_data();
+                break;
+
             case Waiting:
                 win_check();
                 break;
 
             case Aiming:
                 if (take_aim(&shot_pos)) {
+                    shot_pos = (Pos_t){.row = 0, .col = 0};
                     currentState = Firing;
                 }
                 break;
 
             case Firing:
                 fire(shot_pos);
-                currentState = Aiming;
+                currentState = Waiting;
                 break;
 
             default:

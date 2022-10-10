@@ -2,12 +2,16 @@
 // Created by Harry on 2/10/22.
 //
 
+#include "../drivers/avr/ir_uart.h"
 #include "../drivers/navswitch.h"
 #include "../drivers/button.h"
+#include "../drivers/led.h"
 #include "GhostBoard.h"
 #include "Functions.h"
 #include "Board.h"
 #include "Ship.h"
+
+extern bool isPlayerOne;
 
 /**
  * @brief Moves the start position of a ship by a given amount
@@ -190,9 +194,32 @@ void fire(Pos_t pos)
     Cell_State_t board_state = board_get(pos);
     if (board_state == Ship) {
         board_set(pos, Hit);
+        led_set(LED1, 1);
     } else if (board_state == Empty) {
         board_set(pos, Miss);
     }
+}
+
+bool swap_board_data()
+{
+    static bool done = false;
+    static bool connected = false;
+    // Constantly send out and read for 'H'ello message
+    //
+    if (!connected) {
+        if (ir_uart_write_ready_p()) {
+            ir_uart_putc('H');
+        }
+        if (ir_uart_read_ready_p()) {
+            if (ir_uart_getc() == 'H') {
+                connected = true;
+            }
+        }
+    }
+
+
+
+    return done;
 }
 
 void win_check(void)
