@@ -10,5 +10,6 @@
 
 extern void ghostGL_init(void);
 extern void ghostGL_update(void);
+extern void ghostGL_clear(void);
 
 #endif //ENCE260_ASSIGNMENT_GHOSTGL_H

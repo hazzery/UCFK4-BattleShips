@@ -30,3 +30,12 @@ void ghostGL_update(void)
     }
     display_update();
 }
+
+/**
+ * @brief Sets all of the pixels off
+ */
+void ghostGL_clear(void)
+{
+    ghost_wipe();
+    display_clear();
+}

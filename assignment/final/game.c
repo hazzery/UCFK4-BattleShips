@@ -36,7 +36,8 @@ int main (void)
         switch (currentState) {
             case Placing_Ships:
                 if (place_ships()) {
-                    currentState = Aiming;
+                    ghostGL_clear();
+                    currentState = Initializing;
                 }
                 break;
 
