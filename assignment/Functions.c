@@ -53,10 +53,11 @@ static bool placement_is_valid(Ship_t ship)
     Pos_t current_pos;
     for (uint8_t i = 0; i < ship.length; i++) {
 
-        if (ship.placed_horizontally)
-            current_pos = (Pos_t){ship.start_pos.row, ship.start_pos.col + i};
-        else
-            current_pos = (Pos_t){ship.start_pos.row + i, ship.start_pos.col};
+        if (ship.placed_horizontally) {// Ship exists in one row, spanning multiple columns
+            current_pos = (Pos_t) {ship.start_pos.row, ship.start_pos.col + i};
+        } else {// Ship exists in one column, spanning multiple rows
+            current_pos = (Pos_t) {ship.start_pos.row + i, ship.start_pos.col};
+        }
 
         if (board_get(current_pos) != Empty) {
             return false;
@@ -78,10 +79,11 @@ static void set_ship(Ship_t ship, bool ghost_mode)
     Pos_t current_pos;
     for (uint8_t i = 0; i < ship.length; i++) {
 
-        if (ship.placed_horizontally)
-            current_pos = (Pos_t){ship.start_pos.row , ship.start_pos.col + i};
-        else
-            current_pos = (Pos_t){ship.start_pos.row + i, ship.start_pos.col};
+        if (ship.placed_horizontally) { // Ship exists in one row, spanning multiple columns
+            current_pos = (Pos_t) {ship.start_pos.row, ship.start_pos.col + i};
+        } else { // Ship exists in one column, spanning multiple rows
+            current_pos = (Pos_t) {ship.start_pos.row + i, ship.start_pos.col};
+        }
 
         if (!ghost_mode) {
             board_set(current_pos, Ship);
