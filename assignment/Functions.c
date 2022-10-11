@@ -210,6 +210,7 @@ bool swap_board_data(void)
     } else if (ir_uart_read_ready_p()) {
         if (ir_uart_getc() == '1') {
             isPlayerOne = false;
+            led_set(LED1, 1);
         }
     }
 
