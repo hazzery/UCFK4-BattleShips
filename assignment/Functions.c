@@ -202,17 +202,59 @@ void fire(Pos_t pos)
 
 bool swap_board_data(void)
 {
-    static bool done = false;
+    bool done = false;
+    bool playerSeleceted = false;
 
-    if (button_push_event_p(BUTTON1)) {
-        ir_uart_putc('1');
-        isPlayerOne = true;
-    } else if (ir_uart_read_ready_p()) {
-        if (ir_uart_getc() == '1') {
-            isPlayerOne = false;
-            led_set(LED1, 1);
+    while (!playerSeleceted) {
+        if (button_push_event_p(BUTTON1)) {
+            ir_uart_putc('1');
+            isPlayerOne = true;
+            playerSeleceted = true;
+        } else if (ir_uart_read_ready_p()) {
+            if (ir_uart_getc() == '1') {
+                led_set(LED1, 1);
+                isPlayerOne = false;
+                playerSeleceted = true;
+            }
         }
     }
+
+    uint8_t compressed_board[5];
+    compress_board(compressed_board);
+
+    uint8_t oppositions_board[5];
+
+
+    bool board_recieved = false;
+
+    if (isPlayerOne) {
+        for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+            while (!ir_uart_write_ready_p()) continue;
+            ir_uart_putc(compressed_board[col]);
+        }
+        while (!board_recieved) {
+            while (!ir_uart_read_ready_p()) continue;
+            for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+                oppositions_board[col] = ir_uart_getc();
+            }
+            board_recieved = true;
+        }
+    } else {
+        while (!board_recieved) {
+            while (!ir_uart_read_ready_p()) continue;
+            for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+                oppositions_board[col] = ir_uart_getc();
+            }
+            board_recieved = true;
+        }
+        for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+            while (!ir_uart_write_ready_p()) continue;
+            ir_uart_putc(compressed_board[col]);
+        }
+
+    }
+
+    uncompress_board(oppositions_board);
 
     return done;
 }

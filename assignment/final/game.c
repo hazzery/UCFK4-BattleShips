@@ -7,6 +7,8 @@
 #include "../Functions.h"
 #include "../GhostGL.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
 typedef enum game_state_e {
     Placing_Ships,
     Initializing,
@@ -73,3 +75,4 @@ int main (void)
         pacer_wait(); // Wait for next pacer tick
     }
 }
+#pragma clang diagnostic pop

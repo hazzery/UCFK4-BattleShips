@@ -75,3 +75,21 @@ Pos_t move_to_board(int8_t row, int8_t col)
         .row = row, .col = col
     };
 }
+
+void compress_board(uint8_t compressed_board[])
+{
+    for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+        for (uint8_t row = 0; row < BOARD_HEIGHT; row++) {
+            compressed_board[col] |= board[row][col] << row;
+        }
+    }
+}
+
+void uncompress_board(uint8_t compressed_board[])
+{
+    for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+        for (uint8_t row = 0; row < BOARD_HEIGHT; row++) {
+            board[row][col] = (compressed_board[col] & (1 << row)) >> row;
+        }
+    }
+}
