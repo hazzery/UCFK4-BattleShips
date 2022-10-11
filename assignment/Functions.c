@@ -1,5 +1,6 @@
 //
 // Created by Harry on 2/10/22.
+// Edited by Dominic
 //
 
 #include "../drivers/avr/ir_uart.h"
@@ -199,10 +200,15 @@ void fire(Pos_t pos)
         board_set(pos, Miss);
     }
 }
-
-bool swap_board_data(void)
+/**
+ * @brief player one select and swaps game board information
+ * 
+ * waits until a player pushes the button and assigns them as player one
+ * compresses player board and sends to other player before recieving
+ * other players board and vice versa if player 2
+ */
+void swap_board_data(void)
 {
-    bool done = false;
     bool playerSeleceted = false;
 
     while (!playerSeleceted) {
@@ -255,8 +261,6 @@ bool swap_board_data(void)
     }
 
     uncompress_board(oppositions_board);
-
-    return done;
 }
 
 void win_check(void)

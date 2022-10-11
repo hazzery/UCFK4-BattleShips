@@ -48,6 +48,7 @@ int main (void)
 
             case Initializing:
                 swap_board_data();
+                currentState = Waiting;
                 break;
 
             case Waiting:

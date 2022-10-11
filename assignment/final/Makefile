@@ -1,5 +1,5 @@
 # File:   Makefile
-# Author: M. P. Hayes, UCECE
+# Author: Harrison Parkes and Dominic Dumble
 # Date:   12 Sep 2010
 # Descr:  Makefile for game
 
