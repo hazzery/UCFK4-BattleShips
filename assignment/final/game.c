@@ -25,7 +25,7 @@ int main (void)
     system_init();
     ir_uart_init();
     ghostGL_init();
-    pacer_init(120); // Initialize pacer to 120Hz
+    pacer_init(300); // Initialize pacer to 300Hz so display columns update at 60Hz
 
     led_set(LED1, 0);
 
@@ -45,7 +45,7 @@ int main (void)
                 break;
 
             case Initializing:
-                swap_board_data();
+//                swap_board_data();
                 break;
 
             case Waiting:
