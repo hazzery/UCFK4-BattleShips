@@ -45,7 +45,7 @@ int main (void)
                 break;
 
             case Initializing:
-//                swap_board_data();
+                swap_board_data();
                 break;
 
             case Waiting:

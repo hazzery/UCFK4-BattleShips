@@ -5,7 +5,7 @@
 #include "GhostBoard.h"
 #include <string.h>
 
-bool ghost_board[BOARD_HEIGHT][BOARD_WIDTH];
+uint8_t ghost_board[BOARD_HEIGHT][BOARD_WIDTH];
 
 /**
  * @brief Wipes the ghosting board, setting all cells to 0

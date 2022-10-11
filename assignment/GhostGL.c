@@ -2,6 +2,7 @@
 // Created by Harry on 9/10/22.
 //
 
+#include <string.h>
 #include "GhostGL.h"
 #include "../drivers/display.h"
 
@@ -37,5 +38,6 @@ void ghostGL_update(void)
 void ghostGL_clear(void)
 {
     ghost_wipe();
+    memset(board, 0, BOARD_WIDTH * BOARD_HEIGHT);
     display_clear();
 }

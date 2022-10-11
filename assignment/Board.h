@@ -12,7 +12,7 @@
 #define BOARD_WIDTH 5
 #define BOARD_HEIGHT 7
 
-typedef enum cell_state_e {
+typedef enum __attribute__ ((__packed__)) cell_state_e{
     Empty,
     Ship,
     Hit,
