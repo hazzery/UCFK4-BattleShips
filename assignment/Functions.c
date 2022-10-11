@@ -200,6 +200,7 @@ void fire(Pos_t pos)
         board_set(pos, Miss);
     }
 }
+
 /**
  * @brief player one select and swaps game board information
  * 
