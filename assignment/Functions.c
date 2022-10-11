@@ -200,24 +200,18 @@ void fire(Pos_t pos)
     }
 }
 
-bool swap_board_data()
+bool swap_board_data(void)
 {
     static bool done = false;
-    static bool connected = false;
-    // Constantly send out and read for 'H'ello message
-    //
-    if (!connected) {
-        if (ir_uart_write_ready_p()) {
-            ir_uart_putc('H');
-        }
-        if (ir_uart_read_ready_p()) {
-            if (ir_uart_getc() == 'H') {
-                connected = true;
-            }
+
+    if (button_push_event_p(BUTTON1)) {
+        ir_uart_putc('1');
+        isPlayerOne = true;
+    } else if (ir_uart_read_ready_p()) {
+        if (ir_uart_getc() == '1') {
+            isPlayerOne = false;
         }
     }
-
-
 
     return done;
 }

@@ -12,5 +12,6 @@ extern bool place_ships(void);
 extern bool take_aim(Pos_t* shot_pos);
 extern void fire(Pos_t pos);
 extern void win_check(void);
+extern bool swap_board_data(void);
 
 #endif //ENCE260_ASSIGNMENT_FUNCTIONS_H
