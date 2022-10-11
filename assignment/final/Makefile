@@ -64,10 +64,20 @@ ghostBoard.o: ../GhostBoard.c ../GhostBoard.h
 ghostGL.o: ../GhostGL.c ../GhostGL.h ../Board.h ../GhostBoard.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+ir_uart.o: ../../drivers/avr/ir_uart.c ../../drivers/avr/ir_uart.h ../../drivers/avr/usart1.h ../../drivers/avr/timer0.h ../../drivers/avr/pio.h ../../drivers/avr/delay.h
+	$(CC) -c $(CFLAGS) $< -o $@
 
+usart1.o: ../../drivers/avr/usart1.c ../../drivers/avr/usart1.h ../../drivers/avr/system.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+timer0.o: ../../drivers/avr/timer0.c ../../drivers/avr/timer0.h ../../drivers/avr/system.h ../../drivers/avr/bits.h ../../drivers/avr/prescale.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+prescale.o: ../../drivers/avr/prescale.c ../../drivers/avr/prescale.h ../../drivers/avr/system.h
+	$(CC) -c $(CFLAGS) $< -o $@
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o button.o board.o functions.o ship.o ghostBoard.o ghostGL.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o button.o board.o functions.o ship.o ghostBoard.o ghostGL.o ir_uart.o usart1.o timer0.o prescale.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
