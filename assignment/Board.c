@@ -3,32 +3,33 @@
 //
 
 #include "Board.h"
+#include <string.h>
 
-Cell_State_t board[BOARD_HEIGHT][BOARD_WIDTH];
+Board_t ghost_board;
+Board_t state_board;
+Board_t oppositions_board;
 
 /**
- * @brief Reads the state of the specified cell
+ * @brief Sets the value of a single cell on the specified board
  *
- * @param pos The cell to get the state of
- * @return The state of cell at `pos`
+ * @param board The board to write to
+ * @param pos The position of the cell to be set
+ * @param state The state to set the cell to
  */
-Cell_State_t board_get(Pos_t pos)
+void board_set(Board_t* board, Pos_t pos, Cell_State_t state)
 {
-    if(is_on_board(pos)) {
-        return board[pos.row][pos.col];
-    }
-    return Empty;
+    board->grid[pos.row][pos.col] = state;
 }
 
 /**
- * @brief Sets the state of the specified cell
+ * @brief Sets the value of a single cell on the specified board
  *
- * @param pos The cell to set the state of
- * @param state The state to set the cell to
+ * @param pos The board to read from
+ * @param pos The position of the cell to be read
  */
-void board_set(Pos_t pos, Cell_State_t state)
+Cell_State_t board_get(Board_t* board, Pos_t pos)
 {
-    board[pos.row][pos.col] = state;
+    return board->grid[pos.row][pos.col];
 }
 
 /**
@@ -76,20 +77,25 @@ Pos_t move_to_board(int8_t row, int8_t col)
     };
 }
 
-void compress_board(uint8_t compressed_board[])
+void board_wipe(Board_t* board)
+{
+    memset(board->grid, 0, BOARD_WIDTH * BOARD_HEIGHT);
+}
+
+void compress_board(Board_t board, uint8_t compressed_board[])
 {
     for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
         for (uint8_t row = 0; row < BOARD_HEIGHT; row++) {
-            compressed_board[col] |= board[row][col] << row;
+            compressed_board[col] |= board.grid[row][col] << row;
         }
     }
 }
 
-void uncompress_board(uint8_t compressed_board[])
+void uncompress_board(uint8_t compressed_board[], Board_t* board)
 {
     for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
         for (uint8_t row = 0; row < BOARD_HEIGHT; row++) {
-            board[row][col] = (compressed_board[col] & (1 << row)) >> row;
+            board->grid[row][col] = (compressed_board[col] & (1 << row)) >> row;
         }
     }
 }

@@ -52,16 +52,13 @@ button.o: ../../drivers/button.c ../../drivers/avr/system.h ../../drivers/button
 board.o: ../Board.c ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../utils/tinygl.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h ../GhostBoard.h
+functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../utils/tinygl.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ship.o: ../Ship.c ../Ship.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-ghostBoard.o: ../GhostBoard.c ../GhostBoard.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-ghostGL.o: ../GhostGL.c ../GhostGL.h ../Board.h ../GhostBoard.h
+ghostGL.o: ../GhostGL.c ../GhostGL.h ../Board.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ir_uart.o: ../../drivers/avr/ir_uart.c ../../drivers/avr/ir_uart.h ../../drivers/avr/usart1.h ../../drivers/avr/timer0.h ../../drivers/avr/pio.h ../../drivers/avr/delay.h
@@ -77,7 +74,7 @@ prescale.o: ../../drivers/avr/prescale.c ../../drivers/avr/prescale.h ../../driv
 	$(CC) -c $(CFLAGS) $< -o $@
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o button.o board.o functions.o ship.o ghostBoard.o ghostGL.o ir_uart.o usart1.o timer0.o prescale.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o button.o board.o functions.o ship.o ghostGL.o ir_uart.o usart1.o timer0.o prescale.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 

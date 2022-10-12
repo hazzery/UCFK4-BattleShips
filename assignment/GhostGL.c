@@ -6,9 +6,6 @@
 #include "GhostGL.h"
 #include "../drivers/display.h"
 
-extern bool ghost_board[BOARD_HEIGHT][BOARD_WIDTH];
-extern Cell_State_t board[BOARD_HEIGHT][BOARD_WIDTH];
-
 /**
  * @brief Initializes the display, ready for use
  * Must be called exactly once, at the beginning of the program.
@@ -26,7 +23,7 @@ void ghostGL_update(void)
 {
     for (uint8_t row = 0; row < BOARD_HEIGHT; row ++) {
         for (uint8_t col = 0; col < BOARD_WIDTH; col ++) {
-            display_pixel_set(col, row, board[row][col] || ghost_board[row][col]);
+            display_pixel_set(col, row, state_board.grid[row][col] || ghost_board.grid[row][col]);
         }
     }
     display_update();
@@ -37,7 +34,7 @@ void ghostGL_update(void)
  */
 void ghostGL_clear(void)
 {
-    ghost_wipe();
-    memset(board, 0, BOARD_WIDTH * BOARD_HEIGHT);
+    board_wipe(&ghost_board);
+    board_wipe(&state_board);
     display_clear();
 }

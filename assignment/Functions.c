@@ -7,7 +7,6 @@
 #include "../drivers/navswitch.h"
 #include "../drivers/button.h"
 #include "../drivers/led.h"
-#include "GhostBoard.h"
 #include "Functions.h"
 #include "Board.h"
 #include "Ship.h"
@@ -65,7 +64,7 @@ static bool placement_is_valid(Ship_t ship)
             current_pos = (Pos_t) {ship.start_pos.row + i, ship.start_pos.col};
         }
 
-        if (board_get(current_pos) != Empty) {
+        if (board_get(&state_board, current_pos) != Empty) {
             return false;
         }
     }
@@ -92,9 +91,9 @@ static void set_ship(Ship_t ship, bool ghost_mode)
         }
 
         if (!ghost_mode) {
-            board_set(current_pos, Ship);
+            board_set(&state_board, current_pos, Ship);
         } else {
-            ghost_set(current_pos, 1);
+            board_set(&ghost_board, current_pos, 1);
         }
     }
 }
@@ -133,7 +132,7 @@ static bool place_ship(Ship_t* ship)
     //Ensure the ship is actually on the grid
     shift_ship(ship, delta_row, delta_col);
 
-    ghost_wipe();
+    board_wipe(&ghost_board);
     set_ship(*ship, true);
 
     return false;
@@ -176,8 +175,8 @@ bool take_aim(Pos_t* shot_pos)
     *shot_pos = move_to_board(shot_row, shot_col);
 
 
-    ghost_wipe();
-    ghost_set(*shot_pos, true);
+    board_wipe(&ghost_board);
+    board_set(&ghost_board, *shot_pos, true);
 
     return false;
 }
@@ -193,13 +192,13 @@ bool take_aim(Pos_t* shot_pos)
  */
 void fire(Pos_t pos)
 {
-    Cell_State_t board_state = board_get(pos);
+    Cell_State_t board_state = board_get(&state_board, pos);
     if (board_state == Ship) {
         num_hits += 1;
-        board_set(pos, Hit);
+        board_set(&state_board, pos, Hit);
         led_set(LED1, 1);
     } else if (board_state == Empty) {
-        board_set(pos, Miss);
+        board_set(&state_board, pos, Miss);
     }
 }
 
@@ -215,6 +214,7 @@ void swap_board_data(void)
     bool playerSeleceted = false;
 
     while (!playerSeleceted) {
+        button_update();
         if (button_push_event_p(BUTTON1)) {
             ir_uart_putc('1');
             is_player_one = true;
@@ -229,9 +229,9 @@ void swap_board_data(void)
     }
 
     uint8_t compressed_board[5];
-    compress_board(compressed_board);
+    compress_board(state_board, compressed_board);
 
-    uint8_t oppositions_board[5];
+    uint8_t oppositions_compressed_board[5];
 
 
     bool board_recieved = false;
@@ -244,7 +244,7 @@ void swap_board_data(void)
         while (!board_recieved) {
             while (!ir_uart_read_ready_p()) continue;
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
-                oppositions_board[col] = ir_uart_getc();
+                oppositions_compressed_board[col] = ir_uart_getc();
             }
             board_recieved = true;
         }
@@ -252,7 +252,7 @@ void swap_board_data(void)
         while (!board_recieved) {
             while (!ir_uart_read_ready_p()) continue;
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
-                oppositions_board[col] = ir_uart_getc();
+                oppositions_compressed_board[col] = ir_uart_getc();
             }
             board_recieved = true;
         }
@@ -263,7 +263,7 @@ void swap_board_data(void)
 
     }
 
-    uncompress_board(oppositions_board);
+    uncompress_board(oppositions_compressed_board, &oppositions_board);
 }
 
 /**

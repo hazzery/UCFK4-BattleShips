@@ -19,13 +19,23 @@ typedef enum __attribute__ ((__packed__)) cell_state_e{
     Miss
 } Cell_State_t;
 
-extern Cell_State_t board_get(Pos_t pos);
-extern void board_set(Pos_t pos, Cell_State_t state);
+typedef struct board_s {
+    Cell_State_t grid[BOARD_HEIGHT][BOARD_WIDTH];
+} Board_t;
+
+extern Board_t ghost_board;
+extern Board_t state_board;
+extern Board_t oppositions_board;
+
+extern void board_set(Board_t* board, Pos_t pos, Cell_State_t state);
+extern Cell_State_t board_get(Board_t* board, Pos_t pos);
 
 extern bool is_on_board(Pos_t pos);
 extern Pos_t move_to_board(int8_t row, int8_t col);
 
-extern void compress_board(uint8_t compressed_board[]);
-extern void uncompress_board(uint8_t compressed_board[]);
+extern void board_wipe(Board_t* board);
+
+extern void compress_board(Board_t board, uint8_t compressed_board[]);
+extern void uncompress_board(uint8_t compressed_board[], Board_t* board);
 
 #endif //ENCE260_ASSIGNMENT_BOARD_H
