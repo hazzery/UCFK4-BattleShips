@@ -8,6 +8,7 @@
 #include "../drivers/button.h"
 #include "../drivers/led.h"
 #include "../utils/pacer.h"
+#include "../utils/tinygl.h"
 #include "Functions.h"
 #include "Board.h"
 #include "Ship.h"
@@ -275,7 +276,7 @@ void swap_board_data(void)
 }
 
 /**
- * @brief Checks to see if the game has been won, on this board\
+ * @brief Checks to see if the game has been won, on this board
  *
  * @return `true` if game has been won, otherwise `false`
  */
@@ -298,4 +299,34 @@ char wait_for_signal(void)
         opposition_state = ir_uart_getc();
     }
     return opposition_state;
+}
+/**
+ * @brief Sends signal to the opposition to tell them the game has been won
+ * and shows the user they have won.
+ */
+void win_signal(void)
+{
+    while (!ir_uart_write_ready_p()) continue;
+
+    ir_uart_putc('W');
+
+    tinygl_init(DISPLAY_FREQUENCY);
+    tinygl_draw_char('W', tinygl_point(0, 0));
+    while (!navswitch_push_event_p(NAVSWITCH_PUSH)) {
+        tinygl_update();
+        pacer_wait();
+    }
+}
+
+/**
+ * @brief Shows the user they have lost the game
+ */
+void game_lost(void)
+{
+    tinygl_init(DISPLAY_FREQUENCY);
+    tinygl_draw_char('L', tinygl_point(0, 0));
+    while (!navswitch_push_event_p(NAVSWITCH_PUSH)) {
+        tinygl_update();
+        pacer_wait();
+    }
 }
