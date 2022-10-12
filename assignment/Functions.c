@@ -7,12 +7,16 @@
 #include "../drivers/navswitch.h"
 #include "../drivers/button.h"
 #include "../drivers/led.h"
+#include "../utils/pacer.h"
 #include "Functions.h"
 #include "Board.h"
 #include "Ship.h"
 
 extern bool is_player_one;
 static int num_hits = 0;
+
+#define DISPLAY_FREQUENCY 300
+#define TANSFER_FREQUENCY 100
 
 /**
  * @brief Moves the start position of a ship by a given amount
@@ -212,7 +216,6 @@ void fire(Pos_t pos)
 void swap_board_data(void)
 {
     bool playerSeleceted = false;
-
     while (!playerSeleceted) {
         button_update();
         if (button_push_event_p(BUTTON1)) {
@@ -233,18 +236,20 @@ void swap_board_data(void)
 
     uint8_t oppositions_compressed_board[5];
 
-
+    pacer_init(TANSFER_FREQUENCY);
     bool board_recieved = false;
 
     if (is_player_one) {
         for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
             while (!ir_uart_write_ready_p()) continue;
             ir_uart_putc(compressed_board[col]);
+            pacer_wait();
         }
         while (!board_recieved) {
             while (!ir_uart_read_ready_p()) continue;
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
                 oppositions_compressed_board[col] = ir_uart_getc();
+                pacer_wait();
             }
             board_recieved = true;
         }
@@ -253,16 +258,19 @@ void swap_board_data(void)
             while (!ir_uart_read_ready_p()) continue;
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
                 oppositions_compressed_board[col] = ir_uart_getc();
+                pacer_wait();
             }
             board_recieved = true;
         }
         for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
             while (!ir_uart_write_ready_p()) continue;
             ir_uart_putc(compressed_board[col]);
+            pacer_wait();
         }
 
     }
 
+    pacer_init(DISPLAY_FREQUENCY);
     uncompress_board(oppositions_compressed_board, &oppositions_board);
 }
 
