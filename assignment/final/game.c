@@ -49,7 +49,11 @@ int main (void)
 
             case Initializing:
                 swap_board_data();
-                currentState = Waiting;
+                if (!isPlayerOne) {
+                    currentState = Waiting;
+                } else {
+                    currentState = Aiming;
+                }
                 break;
 
             case Waiting:
