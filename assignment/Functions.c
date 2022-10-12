@@ -12,7 +12,8 @@
 #include "Board.h"
 #include "Ship.h"
 
-extern bool isPlayerOne;
+extern bool is_player_one;
+static int num_hits = 0;
 
 /**
  * @brief Moves the start position of a ship by a given amount
@@ -194,6 +195,7 @@ void fire(Pos_t pos)
 {
     Cell_State_t board_state = board_get(pos);
     if (board_state == Ship) {
+        num_hits += 1;
         board_set(pos, Hit);
         led_set(LED1, 1);
     } else if (board_state == Empty) {
@@ -215,12 +217,12 @@ void swap_board_data(void)
     while (!playerSeleceted) {
         if (button_push_event_p(BUTTON1)) {
             ir_uart_putc('1');
-            isPlayerOne = true;
+            is_player_one = true;
             playerSeleceted = true;
         } else if (ir_uart_read_ready_p()) {
             if (ir_uart_getc() == '1') {
                 led_set(LED1, 1);
-                isPlayerOne = false;
+                is_player_one = false;
                 playerSeleceted = true;
             }
         }
@@ -234,7 +236,7 @@ void swap_board_data(void)
 
     bool board_recieved = false;
 
-    if (isPlayerOne) {
+    if (is_player_one) {
         for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
             while (!ir_uart_write_ready_p()) continue;
             ir_uart_putc(compressed_board[col]);
@@ -264,7 +266,12 @@ void swap_board_data(void)
     uncompress_board(oppositions_board);
 }
 
-void win_check(void)
+/**
+ * @brief Checks to see if the game has been won, on this board\
+ *
+ * @return `true` if game has been won, otherwise `false`
+ */
+bool win_check(void)
 {
-
+    return num_hits == NUM_SHIP_CELLS;
 }

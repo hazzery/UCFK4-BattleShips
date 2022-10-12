@@ -10,6 +10,7 @@
 #include "Position.h"
 
 #define NUM_SHIPS 4
+#define NUM_SHIP_CELLS 11
 
 typedef struct ship_s {
     uint8_t length;

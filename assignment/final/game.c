@@ -14,11 +14,12 @@ typedef enum game_state_e {
     Initializing,
     Waiting,
     Aiming,
-    Firing
+    Firing,
+    Won
 } Game_State_t;
 Game_State_t currentState = Placing_Ships;
 
-bool isPlayerOne = false;
+bool is_player_one = false;
 
 int main (void)
 {
@@ -52,7 +53,9 @@ int main (void)
                 break;
 
             case Waiting:
-                win_check();
+                if (win_check()) {
+                    currentState = Won;
+                }
                 break;
 
             case Aiming:
