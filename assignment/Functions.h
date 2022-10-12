@@ -14,5 +14,6 @@ extern bool take_aim(Pos_t* shot_pos);
 extern void fire(Pos_t pos);
 extern bool win_check(void);
 extern void swap_board_data(void);
+extern char wait_for_signal(void);
 
 #endif //ENCE260_ASSIGNMENT_FUNCTIONS_H

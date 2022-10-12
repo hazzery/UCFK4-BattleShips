@@ -58,6 +58,11 @@ int main (void)
                 break;
 
             case Waiting:
+                if (wait_for_signal() == 'W') {
+                    currentState = Lost;
+                } else {
+                    currentState = Aiming;
+                }
                 break;
 
             case Aiming:

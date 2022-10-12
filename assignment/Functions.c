@@ -283,3 +283,19 @@ bool win_check(void)
 {
     return num_hits == NUM_SHIP_CELLS;
 }
+
+/**
+ * @brief waits to recieve win or next turn signal
+ * 
+ * @return 'W' for other players win and 'T' if the game is continuing
+*/
+char wait_for_signal(void)
+{
+    char opposition_state = '\0';
+
+    while(opposition_state == '\0') {
+        while (!ir_uart_read_ready_p()) continue;
+        opposition_state = ir_uart_getc();
+    }
+    return opposition_state;
+}
