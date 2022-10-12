@@ -292,4 +292,14 @@ void win_signal(void)
     while (!ir_uart_write_ready_p()) continue;
 
     ir_uart_putc('W');
+
+    //Display 'W'
+}
+
+/**
+ * @brief Shows the user they have lost the game
+ */
+void game_lost(void)
+{
+    //Display 'L'
 }

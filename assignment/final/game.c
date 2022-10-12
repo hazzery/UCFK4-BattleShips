@@ -80,7 +80,8 @@ int main (void)
                 break;
 
             case Lost:
-                //State is only activated by signal from over board winning
+                //This state is only activated by signal from over board winning
+                game_lost();
                 break;
 
             default:

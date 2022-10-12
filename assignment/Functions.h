@@ -15,5 +15,6 @@ extern void fire(Pos_t pos);
 extern bool win_check(void);
 extern void swap_board_data(void);
 extern void win_signal(void);
+extern void game_lost(void);
 
 #endif //ENCE260_ASSIGNMENT_FUNCTIONS_H
