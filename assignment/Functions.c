@@ -8,6 +8,7 @@
 #include "../drivers/button.h"
 #include "../drivers/led.h"
 #include "../utils/pacer.h"
+#include "../utils/tinygl.h"
 #include "Functions.h"
 #include "Board.h"
 #include "Ship.h"
@@ -286,6 +287,7 @@ bool win_check(void)
 
 /**
  * @brief Sends signal to the opposition to tell them the game has been won
+ * and shows the user they have won.
  */
 void win_signal(void)
 {
@@ -293,7 +295,12 @@ void win_signal(void)
 
     ir_uart_putc('W');
 
-    //Display 'W'
+    tinygl_init(DISPLAY_FREQUENCY);
+    tinygl_draw_char('W', tinygl_point(0, 0));
+    while (!navswitch_push_event_p(NAVSWITCH_PUSH)) {
+        tinygl_update();
+        pacer_wait();
+    }
 }
 
 /**
@@ -301,5 +308,10 @@ void win_signal(void)
  */
 void game_lost(void)
 {
-    //Display 'L'
+    tinygl_init(DISPLAY_FREQUENCY);
+    tinygl_draw_char('L', tinygl_point(0, 0));
+    while (!navswitch_push_event_p(NAVSWITCH_PUSH)) {
+        tinygl_update();
+        pacer_wait();
+    }
 }
