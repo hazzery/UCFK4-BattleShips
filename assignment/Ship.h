@@ -1,6 +1,9 @@
-//
-// Created by Harry on 1/10/22.
-//
+/** @file   Ship.h
+ *  @authors Harrison Parkes
+ *  @date   1st of October 2022
+ *  @brief  Introduces Battleships ship container type
+ *  @note   Ship data structure controlling placement of ships on the display matrix
+*/
 
 #ifndef ENCE260_ASSIGNMENT_SHIP_H
 #define ENCE260_ASSIGNMENT_SHIP_H

@@ -1,7 +1,9 @@
-//
-// Created by Harry on 2/10/22.
-// Edited by Dominic
-//
+/** @file    Functions.h
+ *  @authors Harrison Parkes, Dominic Dumble
+ *  @date    2nd of October 2022
+ *  @brief   Core game functionality
+ *  @note    All functions core to the battleships game
+*/
 
 #ifndef ENCE260_ASSIGNMENT_FUNCTIONS_H
 #define ENCE260_ASSIGNMENT_FUNCTIONS_H

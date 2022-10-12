@@ -1,6 +1,9 @@
-//
-// Created by Harry on 9/10/22.
-//
+/** @file    GhostGL.c
+ *  @authors Harrison Parkes
+ *  @date    9th of October 2022
+ *  @brief   Matrix display graphics
+ *  @note    Reads from the ghost and state boards to update the matrix display
+*/
 
 #include "GhostGL.h"
 #include "../drivers/avr/timer.h"

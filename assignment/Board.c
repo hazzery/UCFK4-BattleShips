@@ -1,6 +1,9 @@
-//
-// Created by Harry on 1/10/22.
-//
+/** @file   Board.c
+ *  @author Harrison Parkes
+ *  @date   1st of October 2022
+ *  @brief  5x7 matrix type with related function
+ *  @note   Used to store states if each pixel on the display matrix
+*/
 
 #include "Board.h"
 #include <string.h>

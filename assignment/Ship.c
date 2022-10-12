@@ -1,6 +1,9 @@
-//
-// Created by Harry on 4/10/22.
-//
+/** @file   Ship.c
+ *  @authors Harrison Parkes
+ *  @date   1st of October 2022
+ *  @brief  Introduces Battleships ship container type
+ *  @note   Ship data structure controlling placement of ships on the display matrix
+*/
 
 #include "Ship.h"
 

@@ -1,6 +1,9 @@
-//
-// Created by Harry on 1/10/22.
-//
+/** @file    Position.h
+ *  @authors Harrison Parkes
+ *  @date    1st of October 2022
+ *  @brief   Introduces position type
+ *  @note    Row, column based coordinate data structure
+*/
 
 #ifndef ENCE260_ASSIGNMENT_POSITION_H
 #define ENCE260_ASSIGNMENT_POSITION_H
