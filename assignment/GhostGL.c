@@ -2,7 +2,6 @@
 // Created by Harry on 9/10/22.
 //
 
-#include <string.h>
 #include "GhostGL.h"
 #include "../drivers/avr/timer.h"
 #include "../drivers/display.h"

@@ -36,6 +36,6 @@ extern Pos_t move_to_board(int8_t row, int8_t col);
 extern void board_wipe(Board_t* board);
 
 extern void compress_board(Board_t board, uint8_t compressed_board[]);
-extern void uncompress_board(uint8_t compressed_board[], Board_t* board);
+extern void uncompress_board(const uint8_t compressed_board[], Board_t* board);
 
 #endif //ENCE260_ASSIGNMENT_BOARD_H
