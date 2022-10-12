@@ -1,7 +1,7 @@
 # File:   Makefile
 # Author: Harrison Parkes and Dominic Dumble
 # Date:   12 Sep 2010
-# Descr:  Makefile for game
+# Description:  Makefile for game
 
 # Definitions.
 CC = avr-gcc

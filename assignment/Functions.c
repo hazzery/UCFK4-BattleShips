@@ -17,7 +17,7 @@ extern bool is_player_one;
 static int num_hits = 0;
 
 #define DISPLAY_FREQUENCY 300
-#define TANSFER_FREQUENCY 100
+#define TRANSFER_FREQUENCY 100
 
 /**
  * @brief Moves the start position of a ship by a given amount
@@ -211,23 +211,23 @@ void fire(Pos_t pos)
  * @brief player one select and swaps game board information
  * 
  * waits until a player pushes the button and assigns them as player one
- * compresses player board and sends to other player before recieving
+ * compresses player board and sends to other player before receiving
  * other players board and vice versa if player 2
  */
 void swap_board_data(void)
 {
-    bool playerSeleceted = false;
-    while (!playerSeleceted) {
+    bool playerSelected = false;
+    while (!playerSelected) {
         button_update();
         if (button_push_event_p(BUTTON1)) {
             ir_uart_putc('1');
             is_player_one = true;
-            playerSeleceted = true;
+            playerSelected = true;
         } else if (ir_uart_read_ready_p()) {
             if (ir_uart_getc() == '1') {
                 led_set(LED1, 1);
                 is_player_one = false;
-                playerSeleceted = true;
+                playerSelected = true;
             }
         }
     }
@@ -237,8 +237,8 @@ void swap_board_data(void)
 
     uint8_t oppositions_compressed_board[5];
 
-    pacer_init(TANSFER_FREQUENCY);
-    bool board_recieved = false;
+    pacer_init(TRANSFER_FREQUENCY);
+    bool board_received = false;
 
     if (is_player_one) {
         for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
@@ -246,22 +246,22 @@ void swap_board_data(void)
             ir_uart_putc(compressed_board[col]);
             pacer_wait();
         }
-        while (!board_recieved) {
+        while (!board_received) {
             while (!ir_uart_read_ready_p()) continue;
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
                 oppositions_compressed_board[col] = ir_uart_getc();
                 pacer_wait();
             }
-            board_recieved = true;
+            board_received = true;
         }
     } else {
-        while (!board_recieved) {
+        while (!board_received) {
             while (!ir_uart_read_ready_p()) continue;
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
                 oppositions_compressed_board[col] = ir_uart_getc();
                 pacer_wait();
             }
-            board_recieved = true;
+            board_received = true;
         }
         for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
             while (!ir_uart_write_ready_p()) continue;
@@ -286,7 +286,7 @@ bool win_check(void)
 }
 
 /**
- * @brief waits to recieve win or next turn signal
+ * @brief waits to receive win or next turn signal
  * 
  * @return 'W' for other players win and 'T' if the game is continuing
 */
