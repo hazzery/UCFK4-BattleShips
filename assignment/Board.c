@@ -111,6 +111,8 @@ void uncompress_board(const uint8_t compressed_board[], Board_t* board)
 {
     for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
         for (uint8_t row = 0; row < BOARD_HEIGHT; row++) {
+            // Uses a bitmask to select the desired bit
+            // and shifts desired bit into the LSB position
             board->grid[row][col] = (compressed_board[col] & (1 << row)) >> row;
         }
     }

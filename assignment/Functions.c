@@ -29,6 +29,7 @@ static int num_hits = 0;
 void shift_ship(Ship_t* ship, int8_t delta_row, int8_t delta_col)
 {
     Pos_t ship_tail = ship_end_pos(*ship);
+
     int8_t new_row = ship_tail.row + delta_row;
     if (new_row < 0 || new_row > BOARD_HEIGHT - 1) {
         return;
@@ -49,6 +50,8 @@ void shift_ship(Ship_t* ship, int8_t delta_row, int8_t delta_col)
         return;
     }
 
+    // Only change the ship's position if shift
+    // doesn't move it off of the matrix
     ship->start_pos = (Pos_t){.row = new_row, .col = new_col};
 }
 
@@ -69,6 +72,7 @@ static bool placement_is_valid(Ship_t ship)
             current_pos = (Pos_t) {ship.start_pos.row + i, ship.start_pos.col};
         }
 
+        // Placement is invalid if position is already occupied
         if (board_get(&state_board, current_pos) != Empty) {
             return false;
         }
@@ -119,10 +123,12 @@ static bool place_ship(Ship_t* ship)
             return true;
         }
     } else if (button_push_event_p(BUTTON1)) {
+        // Rotate ship placement axis on Button1 press
         ship->placed_horizontally = !ship->placed_horizontally;
 
         Pos_t tail = ship_end_pos(*ship);
 
+        // Force the ship to stay on the board
         if (tail.col >= BOARD_WIDTH) {
             ship->start_pos.col -= tail.col - (BOARD_WIDTH - 1);
         } else if (tail.row >= BOARD_HEIGHT) {
@@ -137,6 +143,7 @@ static bool place_ship(Ship_t* ship)
     //Ensure the ship is actually on the grid
     shift_ship(ship, delta_row, delta_col);
 
+    // Remove the previous placement of the ship and replace it with the new one
     board_wipe(&ghost_board);
     set_ship(*ship, true);
 
@@ -168,7 +175,7 @@ bool place_ships(void)
  */
 bool take_aim(Pos_t* shot_pos)
 {
-    // While navswitch isn't pushed in
+    // Conform shot position when navswitch is pushed
     if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
         return true;
     }
@@ -179,7 +186,7 @@ bool take_aim(Pos_t* shot_pos)
 
     *shot_pos = move_to_board(shot_row, shot_col);
 
-
+    // Remove previous cross-hair and place new one
     board_wipe(&ghost_board);
     board_set(&ghost_board, *shot_pos, true);
 
@@ -216,6 +223,8 @@ void fire(Pos_t pos)
  */
 void swap_board_data(void)
 {
+    // Loops until one player presses Button1
+    // Player that presses button becomes Player1
     bool playerSelected = false;
     while (!playerSelected) {
         button_update();
@@ -237,27 +246,31 @@ void swap_board_data(void)
 
     uint8_t oppositions_compressed_board[5];
 
+    // Slow down pacer for IR communication
     pacer_init(TRANSFER_FREQUENCY);
     bool board_received = false;
 
     if (is_player_one) {
+        // Player1 transfers their board data first...
         for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
             while (!ir_uart_write_ready_p()) continue;
             ir_uart_putc(compressed_board[col]);
             pacer_wait();
         }
         while (!board_received) {
-            while (!ir_uart_read_ready_p()) continue;
+            // ...then receives the opposition's.
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+                while (!ir_uart_read_ready_p()) continue;
                 oppositions_compressed_board[col] = ir_uart_getc();
                 pacer_wait();
             }
             board_received = true;
         }
     } else {
+        // Player2 does the exact opposite of Player1
         while (!board_received) {
-            while (!ir_uart_read_ready_p()) continue;
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+                while (!ir_uart_read_ready_p()) continue;
                 oppositions_compressed_board[col] = ir_uart_getc();
                 pacer_wait();
             }
@@ -268,9 +281,9 @@ void swap_board_data(void)
             ir_uart_putc(compressed_board[col]);
             pacer_wait();
         }
-
     }
 
+    // Speed the pacer back up for running the display
     pacer_init(DISPLAY_FREQUENCY);
     uncompress_board(oppositions_compressed_board, &oppositions_board);
 }
@@ -296,6 +309,7 @@ char wait_for_signal(void)
 
     return ir_uart_getc();
 }
+
 /**
  * @brief Sends signal to the opposition to tell them the game has been won
  * and shows the user they have won.
