@@ -197,13 +197,13 @@ bool take_aim(Pos_t* shot_pos)
  */
 void fire(Pos_t pos)
 {
-    Cell_State_t board_state = board_get(&state_board, pos);
+    Cell_State_t board_state = board_get(&oppositions_board, pos);
     if (board_state == Ship) {
         num_hits += 1;
-        board_set(&state_board, pos, Hit);
+        board_set(&oppositions_board, pos, Hit);
         led_set(LED1, 1);
     } else if (board_state == Empty) {
-        board_set(&state_board, pos, Miss);
+        board_set(&oppositions_board, pos, Miss);
     }
 }
 
@@ -292,13 +292,9 @@ bool win_check(void)
 */
 char wait_for_signal(void)
 {
-    char opposition_state = '\0';
+    while (!ir_uart_read_ready_p()) continue;
 
-    while(opposition_state == '\0') {
-        while (!ir_uart_read_ready_p()) continue;
-        opposition_state = ir_uart_getc();
-    }
-    return opposition_state;
+    return ir_uart_getc();
 }
 /**
  * @brief Sends signal to the opposition to tell them the game has been won

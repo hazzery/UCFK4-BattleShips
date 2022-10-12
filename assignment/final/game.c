@@ -34,6 +34,7 @@ int main (void)
     led_set(LED1, 0);
 
     Pos_t shot_pos = {.row = 0, .col = 0};
+    char signal = '\0';
 
     while (1)
     {
@@ -58,9 +59,10 @@ int main (void)
                 break;
 
             case Waiting:
-                if (wait_for_signal() == 'W') {
+                signal = wait_for_signal();
+                if (signal == 'W') {
                     currentState = Lost;
-                } else {
+                } else if (signal == 'T') {
                     currentState = Aiming;
                 }
                 break;
