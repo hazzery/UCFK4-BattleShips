@@ -77,11 +77,22 @@ Pos_t move_to_board(int8_t row, int8_t col)
     };
 }
 
+/**
+ * @brief Sets all of the pixels on the specified board to `0`
+ *
+ * @param board The board to wipe
+ */
 void board_wipe(Board_t* board)
 {
     memset(board->grid, 0, BOARD_WIDTH * BOARD_HEIGHT);
 }
 
+/**
+ * @brief Compresses the given board into 5 bytes for transfer over IR UART
+ *
+ * @param board The board to be compressed
+ * @param compressed_board A pointer to where the compressed board should be written
+ */
 void compress_board(Board_t board, uint8_t compressed_board[])
 {
     for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
@@ -91,6 +102,11 @@ void compress_board(Board_t board, uint8_t compressed_board[])
     }
 }
 
+/**
+ * @brief Uncompresses a 5 byte board to a 35 byte Board_t
+ * @param compressed_board A pointer to the 5 byte compressed board
+ * @param board A pointer to a Board_t to overwrite with uncompressed board
+ */
 void uncompress_board(uint8_t compressed_board[], Board_t* board)
 {
     for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
