@@ -21,9 +21,15 @@ void ghostGL_init(void)
  */
 void ghostGL_update(void)
 {
+    static bool flash_on = true;
+
     for (uint8_t row = 0; row < BOARD_HEIGHT; row ++) {
         for (uint8_t col = 0; col < BOARD_WIDTH; col ++) {
-            display_pixel_set(col, row, state_board.grid[row][col] || ghost_board.grid[row][col]);
+            if (flash_on) {
+                display_pixel_set(col, row, state_board.grid[row][col] || ghost_board.grid[row][col]);
+            } else {
+                display_pixel_set(col, row, state_board.grid[row][col]);
+            }
         }
     }
     display_update();
