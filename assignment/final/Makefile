@@ -52,13 +52,13 @@ button.o: ../../drivers/button.c ../../drivers/avr/system.h ../../drivers/button
 board.o: ../Board.c ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../utils/tinygl.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h ../utils/pacer.h
+functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../utils/tinygl.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h ../../utils/pacer.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ship.o: ../Ship.c ../Ship.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-ghostGL.o: ../GhostGL.c ../GhostGL.h ../Board.h
+ghostGL.o: ../GhostGL.c ../GhostGL.h ../Board.h ../../drivers/avr/timer.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ir_uart.o: ../../drivers/avr/ir_uart.c ../../drivers/avr/ir_uart.h ../../drivers/avr/usart1.h ../../drivers/avr/timer0.h ../../drivers/avr/pio.h ../../drivers/avr/delay.h
