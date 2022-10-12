@@ -275,11 +275,21 @@ void swap_board_data(void)
 }
 
 /**
- * @brief Checks to see if the game has been won, on this board\
+ * @brief Checks to see if the game has been won, on this board
  *
  * @return `true` if game has been won, otherwise `false`
  */
 bool win_check(void)
 {
     return num_hits == NUM_SHIP_CELLS;
+}
+
+/**
+ * @brief Sends signal to the opposition to tell them the game has been won
+ */
+void win_signal(void)
+{
+    while (!ir_uart_write_ready_p()) continue;
+
+    ir_uart_putc('W');
 }

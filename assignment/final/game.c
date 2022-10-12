@@ -76,7 +76,7 @@ int main (void)
                 break;
 
             case Won:
-                // Send signal to say I've won
+                win_signal();
                 break;
 
             case Lost:
