@@ -28,10 +28,12 @@ void ghostGL_update(void)
 {
     static bool flash_on = true;
     static uint8_t flash_ticks = 0;
+    flash_ticks++;
 
     // Turns the ghosted pixels on and off at a rate of 2Hz
     if (flash_ticks >= GHOST_FLASH_TICKS) {
         flash_on = !flash_on;
+        flash_ticks = 0;
     }
 
     //Individually set each pixel on the matrix display

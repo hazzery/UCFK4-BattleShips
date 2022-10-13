@@ -25,7 +25,7 @@ void board_set(Board_t* board, Pos_t pos, Cell_State_t state)
 }
 
 /**
- * @brief Sets the value of a single cell on the specified board
+ * @brief Gets the value of a single cell on the specified board
  *
  * @param pos The board to read from
  * @param pos The position of the cell to be read

@@ -322,10 +322,52 @@ void win_signal(void)
 
     ir_uart_putc('W');
 
-    tinygl_init(DISPLAY_FREQUENCY);
-    tinygl_draw_char('W', tinygl_point(0, 0));
+    //tinygl_init(DISPLAY_FREQUENCY);
+    //tinygl_draw_char('W', tinygl_point(0, 0));
+    Pos_t display_pos = {.row = 0, .col = 0};
+
+    board_wipe(&state_board);
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 1;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 2;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 3;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 4;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 5;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 6;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 5;
+    display_pos.col = 1;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 4;
+    display_pos.col = 2;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 5;
+    display_pos.col = 3;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 6;
+    display_pos.col = 4;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 1;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 2;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 3;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 4;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 5;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 0;
+    board_set(&state_board,display_pos,1);
+
     while (!navswitch_push_event_p(NAVSWITCH_PUSH)) {
-        tinygl_update();
+        //tinygl_update();
+        ghostGL_update();
         pacer_wait();
     }
 }
@@ -335,10 +377,37 @@ void win_signal(void)
  */
 void game_lost(void)
 {
-    tinygl_init(DISPLAY_FREQUENCY);
-    tinygl_draw_char('L', tinygl_point(0, 0));
+    Pos_t display_pos = {.row = 0, .col = 0};
+
+    //tinygl_init(DISPLAY_FREQUENCY);
+    //tinygl_draw_char('L', tinygl_point(0, 0));
+
+    board_wipe(&state_board);
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 1;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 2;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 3;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 4;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 5;
+    board_set(&state_board,display_pos,1);
+    display_pos.row = 6;
+    board_set(&state_board,display_pos,1);
+    display_pos.col = 1;
+    board_set(&state_board,display_pos,1);
+    display_pos.col = 2;
+    board_set(&state_board,display_pos,1);
+    display_pos.col = 3;
+    board_set(&state_board,display_pos,1);
+    display_pos.col = 4;
+    board_set(&state_board,display_pos,1);
+
     while (!navswitch_push_event_p(NAVSWITCH_PUSH)) {
-        tinygl_update();
+        //tinygl_update();
+        ghostGL_update();
         pacer_wait();
     }
 }
