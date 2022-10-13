@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h ../../drivers/navswitch.h ../../drivers/display.h ../../drivers/ledmat.h ../../drivers/led.h ../../utils/pacer.h ../Functions.h
+game.o: game.c ../../drivers/avr/system.h ../../drivers/navswitch.h ../../drivers/display.h ../../drivers/ledmat.h ../../drivers/led.h ../../utils/pacer.h ../Communications.h ../TurnEvents.h ../ShipPlacement.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
@@ -52,7 +52,13 @@ button.o: ../../drivers/button.c ../../drivers/avr/system.h ../../drivers/button
 board.o: ../Board.c ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-functions.o: ../Functions.c ../../drivers/navswitch.h ../../drivers/display.h ../../utils/tinygl.h ../../drivers/led.h ../Functions.h ../Ship.h ../Board.h ../Position.h ../../utils/pacer.h
+ship_placement.o: ../ShipPlacement.c ../../drivers/navswitch.h ../../drivers/display.h ../../drivers/led.h ../ShipPlacement.h ../Ship.h ../Board.h ../Position.h ../../utils/pacer.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+communications.o: ../Communications.c ../../drivers/navswitch.h ../../utils/tinygl.h ../../drivers/led.h ../Communications.h ../Board.h ../Position.h ../../utils/pacer.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+turn_events.o: ../TurnEvents.c ../../drivers/navswitch.h ../../drivers/led.h ../TurnEvents.h ../Ship.h ../Board.h ../Position.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ship.o: ../Ship.c ../Ship.h
@@ -74,7 +80,7 @@ prescale.o: ../../drivers/avr/prescale.c ../../drivers/avr/prescale.h ../../driv
 	$(CC) -c $(CFLAGS) $< -o $@
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o button.o board.o functions.o ship.o ghostGL.o ir_uart.o usart1.o timer0.o prescale.o
+game.out: game.o system.o navswitch.o ledmat.o display.o led.o pacer.o timer.o tinygl.o font.o button.o board.o ship_placement.o communications.o turn_events.o ship.o ghostGL.o ir_uart.o usart1.o timer0.o prescale.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 

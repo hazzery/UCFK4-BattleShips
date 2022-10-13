@@ -4,7 +4,9 @@
 #include "../../drivers/button.h"
 #include "../../drivers/led.h"
 #include "../../utils/pacer.h"
-#include "../Functions.h"
+#include "../Communications.h"
+#include "../ShipPlacement.h"
+#include "../TurnEvents.h"
 #include "../GhostGL.h"
 #include "game.h"
 
@@ -35,7 +37,7 @@ int main (void)
     led_set(LED1, LOW);
 
     Pos_t shot_pos = {.row = 0, .col = 0};
-    char signal = '\0';
+    char signal = 0;
 
     while (1)
     {
@@ -77,12 +79,12 @@ int main (void)
 
             case Firing:
                 fire(shot_pos);
-                if (win_check()) {
+                if (all_ships_sunk()) {
                     currentState = Won;
                 } else {
                     currentState = Waiting;
                     while (!ir_uart_write_ready_p()) continue;
-                    ir_uart_putc('T');
+                    ir_uart_putc(NEXT_TURN_SIGNAL);
                 }
                 break;
 
