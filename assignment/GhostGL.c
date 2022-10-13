@@ -9,6 +9,8 @@
 #include "GhostGL.h"
 #include "Board.h"
 
+#define GHOST_FLASH_TICKS (DISPLAY_FREQUENCY / 2)
+
 /**
  * @brief Initializes the display, ready for use
  * Must be called exactly once, at the beginning of the program.
@@ -25,9 +27,10 @@ void ghostGL_init(void)
 void ghostGL_update(void)
 {
     static bool flash_on = true;
+    static uint8_t flash_ticks = 0;
 
     // Turns the ghosted pixels on and off at a rate of 2Hz
-    if (timer_get() % 3900 == 0) {
+    if (flash_ticks >= GHOST_FLASH_TICKS) {
         flash_on = !flash_on;
     }
 
