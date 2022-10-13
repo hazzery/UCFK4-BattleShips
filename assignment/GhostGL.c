@@ -10,6 +10,8 @@
 #include "../drivers/display.h"
 #include "../utils/font.h"
 
+#define FLASH_VALUE 100
+
 /**
  * @brief Initializes the display, ready for use
  * Must be called exactly once, at the beginning of the program.
@@ -30,7 +32,7 @@ void ghostGL_update(void)
     flash_counter++;
 
     // Turns the ghosted pixels on and off at a rate of 2Hz
-    if (flash_counter == 100) {
+    if (flash_counter == FLASH_VALUE) {
         flash_on = !flash_on;
         flash_counter = 0;
     }
