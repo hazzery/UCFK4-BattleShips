@@ -8,10 +8,10 @@
 #include "Ship.h"
 
 Ship_t ships[NUM_SHIPS] = {
-    {.length = 4, .placed_horizontally = false},
-    {.length = 3, .placed_horizontally = false},
-    {.length = 2, .placed_horizontally = false},
-    {.length = 2, .placed_horizontally = false}
+    {.length = SHIP1_LENGTH, .placed_horizontally = false},
+    {.length = SHIP2_LENGTH, .placed_horizontally = false},
+    {.length = SHIP3_LENGTH, .placed_horizontally = false},
+    {.length = SHIP4_LENGTH, .placed_horizontally = false}
 };
 
 /**
