@@ -8,9 +8,7 @@
 #ifndef ENCE260_ASSIGNMENT_BOARD_H
 #define ENCE260_ASSIGNMENT_BOARD_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include "Position.h"
+#include "final/game.h"
 
 #define BOARD_WIDTH 5
 #define BOARD_HEIGHT 7

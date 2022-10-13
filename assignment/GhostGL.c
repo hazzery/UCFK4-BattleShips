@@ -5,6 +5,7 @@
  *  @note    Reads from the ghost and state boards to update the matrix display
 */
 #include "../drivers/display.h"
+#include "final/game.h"
 #include "GhostGL.h"
 #include "Board.h"
 
