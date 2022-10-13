@@ -27,6 +27,5 @@ typedef struct ship_s {
 
 extern Ship_t ships[NUM_SHIPS];
 extern Pos_t  ship_end_pos(Ship_t ship);
-extern void shift_ship(Ship_t* ship, int8_t delta_row, int8_t delta_col);
 
 #endif //ENCE260_ASSIGNMENT_SHIP_H
