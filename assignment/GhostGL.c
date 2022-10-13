@@ -8,6 +8,7 @@
 #include "GhostGL.h"
 #include "../drivers/avr/timer.h"
 #include "../drivers/display.h"
+#include "../utils/font.h"
 
 /**
  * @brief Initializes the display, ready for use
@@ -25,10 +26,13 @@ void ghostGL_init(void)
 void ghostGL_update(void)
 {
     static bool flash_on = true;
+    static uint8_t flash_counter = 0;
+    flash_counter++;
 
     // Turns the ghosted pixels on and off at a rate of 2Hz
-    if (timer_get() % 3900 == 0) {
+    if (flash_counter == 100) {
         flash_on = !flash_on;
+        flash_counter = 0;
     }
 
     //Individually set each pixel on the matrix display
