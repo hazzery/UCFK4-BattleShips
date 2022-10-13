@@ -36,23 +36,6 @@ Cell_State_t board_get(Board_t* board, Pos_t pos)
 }
 
 /**
- * @brief  Checks if the given position is visible on the 5x7 grid
- *
- * @param pos The position to check
- * @return `true` if the position is on the board, otherwise `false`
- */
-bool is_on_board(Pos_t pos)
-{
-    if (pos.row > BOARD_HEIGHT - 1)
-        return false;
-
-    if ( pos.col > BOARD_WIDTH - 1)
-        return false;
-
-    return true;
-}
-
-/**
  * @brief Moves the given position to its nearest position on the board if it was not
  *
  * Essentially just forces the coordinates onto the bounds of the board.
@@ -107,6 +90,7 @@ void compress_board(Board_t board, uint8_t compressed_board[])
 
 /**
  * @brief Uncompresses a 5 byte board to a 35 byte Board_t
+ *
  * @param compressed_board A pointer to the 5 byte compressed board
  * @param board A pointer to a Board_t to overwrite with uncompressed board
  */

@@ -34,7 +34,6 @@ extern Board_t oppositions_board;
 extern void board_set(Board_t* board, Pos_t pos, Cell_State_t state);
 extern Cell_State_t board_get(Board_t* board, Pos_t pos);
 
-extern bool is_on_board(Pos_t pos);
 extern Pos_t move_to_board(int8_t row, int8_t col);
 
 extern void board_wipe(Board_t* board);
