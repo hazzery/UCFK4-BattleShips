@@ -4,10 +4,9 @@
  *  @brief   Matrix display graphics
  *  @note    Reads from the ghost and state boards to update the matrix display
 */
-
-#include "GhostGL.h"
-#include "../drivers/avr/timer.h"
 #include "../drivers/display.h"
+#include "GhostGL.h"
+#include "Board.h"
 
 /**
  * @brief Initializes the display, ready for use

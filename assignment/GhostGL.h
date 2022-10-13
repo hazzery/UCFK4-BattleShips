@@ -8,7 +8,6 @@
 #ifndef ENCE260_ASSIGNMENT_GHOSTGL_H
 #define ENCE260_ASSIGNMENT_GHOSTGL_H
 
-#include "Board.h"
 
 extern void ghostGL_init(void);
 extern void ghostGL_update(void);
