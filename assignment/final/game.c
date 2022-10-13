@@ -78,8 +78,11 @@ int main (void)
                 fire(shot_pos);
                 if (win_check()) {
                     currentState = Won;
+                } else {
+                    currentState = Waiting;
+                    while (!ir_uart_write_ready_p()) continue;
+                    ir_uart_putc('T');
                 }
-                currentState = Waiting;
                 break;
 
             case Won:
