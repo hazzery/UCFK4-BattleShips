@@ -6,6 +6,7 @@
 #include "../../utils/pacer.h"
 #include "../Functions.h"
 #include "../GhostGL.h"
+#include "game.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
@@ -29,9 +30,9 @@ int main (void)
     system_init();
     ir_uart_init();
     ghostGL_init();
-    pacer_init(300); // Initialize pacer to 300Hz so display columns update at 60Hz
+    pacer_init(DISPLAY_FREQUENCY); // Initialize pacer to 300Hz so display columns update at 60Hz
 
-    led_set(LED1, 0);
+    led_set(LED1, LOW);
 
     Pos_t shot_pos = {.row = 0, .col = 0};
     char signal = '\0';
@@ -60,9 +61,9 @@ int main (void)
 
             case Waiting:
                 signal = wait_for_signal();
-                if (signal == 'W') {
+                if (signal == WIN_SIGNAL) {
                     currentState = Lost;
-                } else if (signal == 'T') {
+                } else if (signal == NEXT_TURN_SIGNAL) {
                     currentState = Aiming;
                 }
                 break;
