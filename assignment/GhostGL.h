@@ -8,7 +8,10 @@
 #ifndef ENCE260_ASSIGNMENT_GHOSTGL_H
 #define ENCE260_ASSIGNMENT_GHOSTGL_H
 
-
+/**
+ * @brief Initializes the display, ready for use
+ * Must be called exactly once, at the beginning of the program.
+ */
 extern void ghostGL_init(void);
 
 /**
