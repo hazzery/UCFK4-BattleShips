@@ -24,6 +24,7 @@ typedef enum game_state_e {
 Game_State_t currentState = Placing_Ships;
 
 bool is_player_one = false;
+uint8_t compressed_board[BOARD_WIDTH];
 
 int main (void)
 {
@@ -47,6 +48,7 @@ int main (void)
         switch (currentState) {
             case Placing_Ships:
                 if (place_ships()) {
+                    compress_board(state_board, compressed_board);
                     ghostGL_clear();
                     currentState = Initializing;
                 }

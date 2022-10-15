@@ -16,6 +16,7 @@
 #include "Board.h"
 
 extern bool is_player_one;
+extern uint8_t compressed_board;
 
 /**
  * @brief player one select and swaps game board information
@@ -44,8 +45,8 @@ void swap_board_data(void)
         }
     }
 
-    uint8_t compressed_board[BOARD_WIDTH];
-    compress_board(state_board, compressed_board);
+    //uint8_t compressed_board[BOARD_WIDTH];
+    //compress_board(state_board, compressed_board);
 
     uint8_t oppositions_compressed_board[BOARD_WIDTH];
 

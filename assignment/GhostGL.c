@@ -1,5 +1,5 @@
 /** @file    GhostGL.c
- *  @authors Harrison Parkes
+ *  @authors Harrison Parkes, Dominic Dumble
  *  @date    9th of October 2022
  *  @brief   Matrix display graphics
  *  @note    Reads from the ghost and state boards to update the matrix display
