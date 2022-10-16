@@ -42,7 +42,7 @@ void ghostGL_update(void)
             if (flash_on) {
                 display_pixel_set(col, row, state_board.grid[row][col] || ghost_board.grid[row][col]);
             } else {
-                display_pixel_set(col, row, state_board.grid[row][col]);
+                display_pixel_set(col, row, state_board.grid[row][col] || oppositions_board.grid[row][col]);
             }
         }
     }
@@ -50,9 +50,19 @@ void ghostGL_update(void)
 }
 
 /**
+ * @brief compresses board for communication before wiping data
+ * 
+ * @param compressed_board where compressed board data is stored
+*/
+void preclear_compress(uint8_t compressed_board[])
+{
+    compress_board(state_board, compressed_board);
+}
+
+/**
  * @brief Sets all of the pixels off
  */
-void ghostGL_clear(uint8_t compressed_board[])
+void ghostGL_clear(void)
 {
     // We call this function to turn the display off straight after
     // the fourth ship is placed, but at the current moment
@@ -66,8 +76,6 @@ void ghostGL_clear(uint8_t compressed_board[])
     // OR, a probably better solution, we compress the board as
     // soon as the 4th ship is placed, and just keep that
     // still wiping the normal board as we don't need it
-
-    compress_board(state_board, compressed_board);
     board_wipe(&ghost_board);
     board_wipe(&state_board);
     display_clear();

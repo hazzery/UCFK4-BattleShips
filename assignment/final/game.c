@@ -48,7 +48,8 @@ int main (void)
         switch (currentState) {
             case Placing_Ships:
                 if (place_ships()) {
-                    ghostGL_clear(compressed_board);
+                    preclear_compress(compressed_board);
+                    ghostGL_clear();
                     currentState = Initializing;
                 }
                 break;
@@ -63,6 +64,7 @@ int main (void)
                 break;
 
             case Waiting:
+                led_set(BLUE_LED, LOW);
                 signal = wait_for_signal(is_player_one);
                 if (signal == WIN_SIGNAL) {
                     currentState = Lost;
