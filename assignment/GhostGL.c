@@ -9,7 +9,7 @@
 #include "GhostGL.h"
 #include "Board.h"
 
-#define GHOST_FLASH_TICKS (DISPLAY_FREQUENCY / 2)
+#define GHOST_FLASH_TICKS (DISPLAY_FREQUENCY / 4)
 
 /**
  * @brief Initializes the display, ready for use
