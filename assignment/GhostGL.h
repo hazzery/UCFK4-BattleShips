@@ -23,6 +23,6 @@ extern void ghostGL_update(void);
 /**
  * @brief Sets all of the pixels off
  */
-extern void ghostGL_clear(void);
+extern void ghostGL_clear(uint8_t compressed_board[]);
 
 #endif //ENCE260_ASSIGNMENT_GHOSTGL_H

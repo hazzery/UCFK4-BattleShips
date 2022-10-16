@@ -52,7 +52,7 @@ void ghostGL_update(void)
 /**
  * @brief Sets all of the pixels off
  */
-void ghostGL_clear(void)
+void ghostGL_clear(uint8_t compressed_board[])
 {
     // We call this function to turn the display off straight after
     // the fourth ship is placed, but at the current moment
@@ -66,6 +66,9 @@ void ghostGL_clear(void)
     // OR, a probably better solution, we compress the board as
     // soon as the 4th ship is placed, and just keep that
     // still wiping the normal board as we don't need it
+
+    compress_board(state_board, compressed_board);
+    uncompress_board(compressed_board, &oppositions_board);
     board_wipe(&ghost_board);
     board_wipe(&state_board);
     display_clear();
