@@ -68,7 +68,6 @@ void ghostGL_clear(uint8_t compressed_board[])
     // still wiping the normal board as we don't need it
 
     compress_board(state_board, compressed_board);
-    uncompress_board(compressed_board, &oppositions_board);
     board_wipe(&ghost_board);
     board_wipe(&state_board);
     display_clear();
