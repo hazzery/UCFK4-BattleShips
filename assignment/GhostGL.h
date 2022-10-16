@@ -1,5 +1,5 @@
 /** @file    GhostGL.h
- *  @authors Harrison Parkes
+ *  @authors Harrison Parkes, Dominic Dumble
  *  @date    9th of October 2022
  *  @brief   Matrix display graphics
  *  @note    Reads from the ghost and state boards to update the matrix display
@@ -23,6 +23,13 @@ extern void ghostGL_update(void);
 /**
  * @brief Sets all of the pixels off
  */
-extern void ghostGL_clear(uint8_t compressed_board[]);
+extern void ghostGL_clear(void);
+
+/**
+ * @brief compresses board for communication before wiping data
+ * 
+ * @param compressed_board where compressed board data is stored
+*/
+extern void preclear_compress(uint8_t compressed_board[]);
 
 #endif //ENCE260_ASSIGNMENT_GHOSTGL_H

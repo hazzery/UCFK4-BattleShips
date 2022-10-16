@@ -95,7 +95,7 @@ void swap_board_data(uint8_t compressed_board[])
 /**
  * @brief Receives status signal from the opposition
  *
- * @return The signal from the opposition, 'W' if the opposition has won, 'T' if it time to take another turn
+ * @return The signal from the opposition, 'W' if the opposition has won, 'T' or 'U' depending on player if it time to take another turn
 */
 char wait_for_signal(bool is_player_one)
 {
