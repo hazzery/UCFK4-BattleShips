@@ -1,3 +1,9 @@
+/** @file    game.c
+ *  @authors Harrison Parkes, Dominic Dumble
+ *  @date    1st of October 2022
+ *  @brief   Battler Ships main loop
+*/
+
 #include "../../drivers/avr/ir_uart.h"
 #include "../../drivers/avr/system.h"
 #include "../../drivers/navswitch.h"
@@ -35,7 +41,7 @@ int main (void)
     ghostGL_init();
     pacer_init(DISPLAY_FREQUENCY); // Initialize pacer to 300Hz so display columns update at 60Hz
 
-    led_set(LED1, LOW);
+    led_set(BLUE_LED, LOW);
 
     Pos_t shot_pos = {.row = 0, .col = 0};
     char signal = 0;
