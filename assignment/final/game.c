@@ -48,14 +48,13 @@ int main (void)
         switch (currentState) {
             case Placing_Ships:
                 if (place_ships()) {
-                    compress_board(state_board, compressed_board);
-                    ghostGL_clear();
+                    ghostGL_clear(compressed_board);
                     currentState = Initializing;
                 }
                 break;
 
             case Initializing:
-                swap_board_data();
+                swap_board_data(compressed_board);
                 if (!is_player_one) {
                     currentState = Waiting;
                 } else {
@@ -64,10 +63,10 @@ int main (void)
                 break;
 
             case Waiting:
-                signal = wait_for_signal();
+                signal = wait_for_signal(is_player_one);
                 if (signal == WIN_SIGNAL) {
                     currentState = Lost;
-                } else if (signal == NEXT_TURN_SIGNAL) {
+                } else if ((signal == NEXT_TURN_SIGNAL_P1) || (signal == NEXT_TURN_SIGNAL_P2)) {
                     currentState = Aiming;
                 }
                 break;
@@ -86,7 +85,11 @@ int main (void)
                 } else {
                     currentState = Waiting;
                     while (!ir_uart_write_ready_p()) continue;
-                    ir_uart_putc(NEXT_TURN_SIGNAL);
+                    if (is_player_one) {
+                        ir_uart_putc(NEXT_TURN_SIGNAL_P2);
+                    } else {
+                        ir_uart_putc(NEXT_TURN_SIGNAL_P1);
+                    }
                 }
                 break;
 

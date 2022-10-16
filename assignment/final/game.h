@@ -18,4 +18,6 @@
 #define HIGH 1
 #define LOW 0
 
+#define BOARD_WIDTH 5
+
 #endif //ENCE260_ASSIGNMENT_GAME_H

@@ -25,7 +25,7 @@ extern uint8_t compressed_board;
  * compresses player board and sends to other player before receiving
  * other players board and vice versa if player 2
  */
-void swap_board_data(void)
+void swap_board_data(uint8_t compressed_board[])
 {
     // Loops until one player presses Button1
     // Player that presses button becomes Player1
@@ -86,7 +86,7 @@ void swap_board_data(void)
             pacer_wait();
         }
     }
-
+    led_set(BLUE_LED, LOW);
     // Speed the pacer back up for running the display
     pacer_init(DISPLAY_FREQUENCY);
     uncompress_board(oppositions_compressed_board, &oppositions_board);
@@ -97,11 +97,20 @@ void swap_board_data(void)
  *
  * @return The signal from the opposition, 'W' if the opposition has won, 'T' if it time to take another turn
 */
-char wait_for_signal(void)
+char wait_for_signal(bool is_player_one)
 {
-    while (!ir_uart_read_ready_p()) continue;
+    bool valid_signal = false;
+    char signal;
 
-    return ir_uart_getc();
+    while (!valid_signal) {
+        while (!ir_uart_read_ready_p()) continue;
+        signal = ir_uart_getc();
+        if ((signal == NEXT_TURN_SIGNAL_P1 && is_player_one) || (signal == NEXT_TURN_SIGNAL_P2 && !is_player_one) || signal == WIN_SIGNAL) {
+            valid_signal = !valid_signal;
+        }
+    }
+
+    return signal;
 }
 
 /**

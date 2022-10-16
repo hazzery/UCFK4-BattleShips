@@ -10,7 +10,8 @@
 
 #define WIN_SIGNAL 'W'
 #define LOSS_SIGNAL 'L'
-#define NEXT_TURN_SIGNAL 'T'
+#define NEXT_TURN_SIGNAL_P1 'T'
+#define NEXT_TURN_SIGNAL_P2 'U'
 #define PLAYER1_SIGNAL '1'
 
 #define TRANSFER_FREQUENCY 100
@@ -22,14 +23,14 @@
  * compresses player board and sends to other player before receiving
  * other players board and vice versa if player 2
  */
-extern void swap_board_data(void);
+extern void swap_board_data(uint8_t compressed_board[]);
 
 /**
  * @brief Receives status signal from the opposition
  *
  * @return The signal from the opposition, 'W' if the opposition has won, 'T' if it time to take another turn
 */
-extern char wait_for_signal(void);
+extern char wait_for_signal(bool is_player_one);
 
 /**
  * @brief Sends signal to the opposition to tell them the game has been won
