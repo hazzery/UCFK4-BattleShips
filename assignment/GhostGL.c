@@ -64,18 +64,6 @@ void preclear_compress(uint8_t compressed_board[])
  */
 void ghostGL_clear(void)
 {
-    // We call this function to turn the display off straight after
-    // the fourth ship is placed, but at the current moment
-    // the board_wipe function clears all the memory, and then
-    // we go to send over the board data. Which just got wiped.
-
-    // I can think of two ways to fix this
-    // Instead of wiping the board to clear the screen, we could
-    // turn off the display, while the transmission is happening
-    // and turn it back on.
-    // OR, a probably better solution, we compress the board as
-    // soon as the 4th ship is placed, and just keep that
-    // still wiping the normal board as we don't need it
     board_wipe(&ghost_board);
     board_wipe(&state_board);
     display_clear();
