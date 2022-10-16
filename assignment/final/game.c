@@ -56,10 +56,10 @@ int main (void)
 
             case Initializing:
                 swap_board_data(compressed_board);
-                if (!is_player_one) {
-                    currentState = Waiting;
-                } else {
+                if (is_player_one) {
                     currentState = Aiming;
+                } else {
+                    currentState = Waiting;
                 }
                 break;
 
