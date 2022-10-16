@@ -75,13 +75,13 @@ int main (void)
 
             case Aiming:
                 if (take_aim(&shot_pos)) {
-                    shot_pos = (Pos_t){.row = 0, .col = 0};
                     currentState = Firing;
                 }
                 break;
 
             case Firing:
                 fire(shot_pos);
+                shot_pos = (Pos_t){.row = 0, .col = 0};
                 if (all_ships_sunk()) {
                     currentState = Won;
                 } else {

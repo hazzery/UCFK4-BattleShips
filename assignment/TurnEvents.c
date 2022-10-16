@@ -36,7 +36,7 @@ bool take_aim(Pos_t* shot_pos)
 
     // Remove previous cross-hair and place new one
     board_wipe(&ghost_board);
-    board_set(&ghost_board, *shot_pos, true);
+    board_set(&ghost_board, *shot_pos, HIGH);
 
     return false;
 }
@@ -55,10 +55,10 @@ void fire(Pos_t pos)
     Cell_State_t board_state = board_get(&oppositions_board, pos);
     if (board_state == Ship) {
         num_hits += 1;
-        board_set(&oppositions_board, pos, Hit);
+        board_set(&state_board, pos, Hit);
         led_set(BLUE_LED, HIGH);
     } else if (board_state == Empty) {
-        board_set(&oppositions_board, pos, Miss);
+        board_set(&state_board, pos, Miss);
     }
 }
 
