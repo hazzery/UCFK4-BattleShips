@@ -68,3 +68,19 @@ void ghostGL_clear(void)
     board_wipe(&state_board);
     display_clear();
 }
+
+/**
+ * @brief Shows the specified bit-mapped pattern on the matrix display.
+ *
+ * @param bitmap Array bitmap to show on display
+ */
+void ghostGL_show_bitmap(Bitmap_t bitmap)
+{
+    ghostGL_clear();
+
+    for (uint8_t row = 0; row < BOARD_HEIGHT; row++) {
+        for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
+            state_board.grid[row][col] = (bool)(bitmap[col] & BIT(row));
+        }
+    }
+}

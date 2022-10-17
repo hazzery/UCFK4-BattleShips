@@ -32,4 +32,11 @@ extern void ghostGL_clear(void);
 */
 extern void preclear_compress(Bitmap_t compressed_board);
 
+/**
+ * @brief Shows the specified bit-mapped pattern on the matrix display.
+ *
+ * @param bitmap Array bitmap to show on display
+ */
+extern void ghostGL_show_bitmap(Bitmap_t bitmap);
+
 #endif //ENCE260_ASSIGNMENT_GHOSTGL_H
