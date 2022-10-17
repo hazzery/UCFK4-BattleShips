@@ -11,6 +11,8 @@ Repeat this process for the next three ships. Placing the last ship will clear t
 
 Once all ships are placed, place both Funk Kits together ready for Infra-Red communications.
 The player that wishes to play first must press Button1 to confirm both players are ready.
+Player2's blue LED will turn on to show the message was recieved.
+This will turn off once transmission is complete.
 This person is now referred to as Player1 from now on.
 The two Fun Kits will then exchange ship placement information.
 
@@ -20,8 +22,11 @@ Once communication is complete, Player1's Fun Kit will move into aiming state.
 The top left LED on the matrix will flash and the player can use the navswitch to choose where
 they would like to fire. To confirm position, press down on the navswitch.
 The LED will then stop flashing and will remain on until the game finishes.
-If the shot was a hit, the blue LED wil flash on for a short period.
+If the shot was a hit, the blue LED wil turn on untill the begining of their next turn.
 Player1's Fun Kit is now in waiting state and the navswitch will no longer do anything.
 
 This marks the end of Player1's turn, and will allow Player2 to have theirs.
 The game repeats as so until one person has hit all of the opposition's ships.
+
+If one player has hit all of their opposition's ships, a 'W' displays on the winning player's
+Fun Kit, and an 'L' on the losers.
