@@ -71,13 +71,13 @@ int main (void)
                 break;
 
             case Waiting:
-                led_set(BLUE_LED, LOW);
                 signal = wait_for_signal(is_player_one);
                 if (signal == WIN_SIGNAL) {
                     currentState = Lost;
                 } else if ((signal == NEXT_TURN_SIGNAL_P1) || (signal == NEXT_TURN_SIGNAL_P2)) {
                     currentState = Aiming;
                 }
+                led_set(BLUE_LED, LOW);
                 break;
 
             case Aiming:
@@ -91,6 +91,7 @@ int main (void)
                 shot_pos = (Pos_t){.row = 0, .col = 0};
                 if (all_ships_sunk()) {
                     currentState = Won;
+                    led_set(BLUE_LED, LOW);
                 } else {
                     currentState = Waiting;
                     while (!ir_uart_write_ready_p()) continue;
