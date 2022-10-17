@@ -41,7 +41,7 @@ Bitmap_t loss_bitmap = {
  * compresses player board and sends to other player before receiving
  * other players board and vice versa if player 2
  */
-void swap_board_data(uint8_t compressed_board[])
+void swap_board_data(Bitmap_t compressed_board)
 {
     // Loops until one player presses Button1
     // Player that presses button becomes Player1
@@ -64,7 +64,7 @@ void swap_board_data(uint8_t compressed_board[])
     //uint8_t compressed_board[BOARD_WIDTH];
     //compress_board(state_board, compressed_board);
 
-    uint8_t oppositions_compressed_board[BOARD_WIDTH];
+    Bitmap_t oppositions_compressed_board;
 
     // Slow down pacer for IR communication
     pacer_init(TRANSFER_FREQUENCY);
