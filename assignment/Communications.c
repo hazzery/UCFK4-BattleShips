@@ -10,10 +10,10 @@
 #include "../drivers/button.h"
 #include "../drivers/led.h"
 #include "../utils/pacer.h"
-#include "../utils/tinygl.h"
 #include "Communications.h"
 #include "final/game.h"
 #include "Board.h"
+#include "GhostGL.h"
 
 extern bool is_player_one;
 extern uint8_t compressed_board;
@@ -136,15 +136,9 @@ char wait_for_signal(bool is_player_one)
 void win_signal(void)
 {
     while (!ir_uart_write_ready_p()) continue;
-
     ir_uart_putc(WIN_SIGNAL);
 
-    tinygl_init(DISPLAY_FREQUENCY);
-    tinygl_draw_char(WIN_SIGNAL, tinygl_point(0, 0));
-    while (!navswitch_push_event_p(NAVSWITCH_PUSH)) {
-        tinygl_update();
-        pacer_wait();
-    }
+    ghostGL_show_bitmap(win_bitmap);
 }
 
 /**
@@ -152,10 +146,5 @@ void win_signal(void)
  */
 void game_lost(void)
 {
-    tinygl_init(DISPLAY_FREQUENCY);
-    tinygl_draw_char(LOSS_SIGNAL, tinygl_point(0, 0));
-    while (!navswitch_push_event_p(NAVSWITCH_PUSH)) {
-        tinygl_update();
-        pacer_wait();
-    }
+    ghostGL_show_bitmap(loss_bitmap);
 }
