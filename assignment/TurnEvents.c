@@ -23,8 +23,10 @@ static int num_hits = 0;
  */
 bool take_aim(Pos_t* shot_pos)
 {
+    Cell_State_t board_state = board_get(&state_board, *shot_pos);
+    
     // Conform shot position when navswitch is pushed
-    if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
+    if (navswitch_push_event_p(NAVSWITCH_PUSH) && !(board_state == Hit || board_state == Miss)) {
         return true;
     }
 
