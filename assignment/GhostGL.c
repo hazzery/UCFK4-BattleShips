@@ -42,7 +42,7 @@ void ghostGL_update(void)
             if (flash_on) {
                 display_pixel_set(col, row, state_board.grid[row][col] || ghost_board.grid[row][col]);
             } else {
-                display_pixel_set(col, row, state_board.grid[row][col] || oppositions_board.grid[row][col]);
+                display_pixel_set(col, row, state_board.grid[row][col]);
             }
         }
     }
