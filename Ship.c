@@ -6,6 +6,7 @@
 */
 
 #include "Ship.h"
+#include "game.h"
 
 Ship_t ships[NUM_SHIPS] = {
     {.length = SHIP1_LENGTH, .placed_horizontally = false},

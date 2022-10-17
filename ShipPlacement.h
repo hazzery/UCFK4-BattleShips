@@ -8,7 +8,7 @@
 #ifndef ENCE260_ASSIGNMENT_SHIPPLACEMENT_H
 #define ENCE260_ASSIGNMENT_SHIPPLACEMENT_H
 
-#include "final/game.h"
+#include "game.h"
 
 /**
  * @brief Controls the placement of all ships

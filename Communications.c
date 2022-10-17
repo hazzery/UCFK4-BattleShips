@@ -11,7 +11,7 @@
 #include "../drivers/led.h"
 #include "../utils/pacer.h"
 #include "Communications.h"
-#include "final/game.h"
+#include "game.h"
 #include "Board.h"
 #include "GhostGL.h"
 

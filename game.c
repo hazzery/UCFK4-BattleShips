@@ -4,16 +4,16 @@
  *  @brief   Battler Ships main loop
 */
 
-#include "../../drivers/avr/ir_uart.h"
-#include "../../drivers/avr/system.h"
-#include "../../drivers/navswitch.h"
-#include "../../drivers/button.h"
-#include "../../drivers/led.h"
-#include "../../utils/pacer.h"
-#include "../Communications.h"
-#include "../ShipPlacement.h"
-#include "../TurnEvents.h"
-#include "../GhostGL.h"
+#include "../drivers/avr/ir_uart.h"
+#include "../drivers/avr/system.h"
+#include "../drivers/navswitch.h"
+#include "../drivers/button.h"
+#include "../drivers/led.h"
+#include "../utils/pacer.h"
+#include "Communications.h"
+#include "ShipPlacement.h"
+#include "TurnEvents.h"
+#include "GhostGL.h"
 #include "game.h"
 
 typedef enum game_state_e {

@@ -8,7 +8,7 @@
 #ifndef ENCE260_ASSIGNMENT_TURNEVENTS_H
 #define ENCE260_ASSIGNMENT_TURNEVENTS_H
 
-#include "final/game.h"
+#include "game.h"
 
 extern bool take_aim(Pos_t* shot_pos);
 extern void fire(Pos_t pos);

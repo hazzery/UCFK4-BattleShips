@@ -8,6 +8,8 @@
 #ifndef ENCE260_ASSIGNMENT_GHOSTGL_H
 #define ENCE260_ASSIGNMENT_GHOSTGL_H
 
+#include "game.h"
+
 /**
  * @brief Initializes the display, ready for use
  * Must be called exactly once, at the beginning of the program.

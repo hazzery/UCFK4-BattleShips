@@ -7,10 +7,10 @@
 
 #include "../drivers/navswitch.h"
 #include "../drivers/led.h"
-#include "final/game.h"
 #include "TurnEvents.h"
 #include "Board.h"
 #include "Ship.h"
+#include "game.h"
 static int num_hits = 0;
 
 /**

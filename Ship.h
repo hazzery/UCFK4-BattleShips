@@ -8,7 +8,7 @@
 #ifndef ENCE260_ASSIGNMENT_SHIP_H
 #define ENCE260_ASSIGNMENT_SHIP_H
 
-#include "final/game.h"
+#include "game.h"
 
 #define NUM_SHIPS 4
 
