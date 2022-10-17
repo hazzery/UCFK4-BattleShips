@@ -25,7 +25,8 @@ typedef enum game_state_e {
     Aiming,
     Firing,
     Won,
-    Lost
+    Lost,
+    Done
 } Game_State_t;
 Game_State_t currentState = Placing_Ships;
 
@@ -103,11 +104,16 @@ int main (void)
 
             case Won:
                 win_signal();
+                currentState = Done;
                 break;
 
             case Lost:
                 //This state is only activated by signal from over board winning
                 game_lost();
+                currentState = Done;
+                break;
+
+            case Done:
                 break;
 
             default:
