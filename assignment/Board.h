@@ -72,7 +72,7 @@ extern void board_wipe(Board_t* board);
  * @param board The board to be compressed
  * @param compressed_board A pointer to where the compressed board should be written
  */
-extern void compress_board(Board_t board, uint8_t compressed_board[]);
+extern void compress_board(Board_t board, Bitmap_t compressed_board);
 
 /**
  * @brief Uncompresses a 5 byte board to a 35 byte Board_t
@@ -80,6 +80,6 @@ extern void compress_board(Board_t board, uint8_t compressed_board[]);
  * @param compressed_board A pointer to the 5 byte compressed board
  * @param board A pointer to a Board_t to overwrite with uncompressed board
  */
-extern void uncompress_board(const uint8_t compressed_board[], Board_t* board);
+extern void uncompress_board(const Bitmap_t compressed_board, Board_t* board);
 
 #endif //ENCE260_ASSIGNMENT_BOARD_H

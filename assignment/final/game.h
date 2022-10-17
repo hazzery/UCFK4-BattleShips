@@ -20,4 +20,6 @@
 
 #define BOARD_WIDTH 5
 
+typedef uint8_t Bitmap_t[BOARD_WIDTH];
+
 #endif //ENCE260_ASSIGNMENT_GAME_H

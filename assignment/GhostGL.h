@@ -30,6 +30,6 @@ extern void ghostGL_clear(void);
  * 
  * @param compressed_board where compressed board data is stored
 */
-extern void preclear_compress(uint8_t compressed_board[]);
+extern void preclear_compress(Bitmap_t compressed_board);
 
 #endif //ENCE260_ASSIGNMENT_GHOSTGL_H

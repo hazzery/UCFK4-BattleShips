@@ -18,6 +18,22 @@
 extern bool is_player_one;
 extern uint8_t compressed_board;
 
+Bitmap_t win_bitmap = {
+    0b00111111,
+    0b01000000,
+    0b00111000,
+    0b01000000,
+    0b00111111
+};
+
+Bitmap_t loss_bitmap = {
+    0b01111111,
+    0b01000000,
+    0b01000000,
+    0b01000000,
+    0b01000000
+};
+
 /**
  * @brief player one select and swaps game board information
  * 

@@ -79,7 +79,7 @@ void board_wipe(Board_t* board)
  * @param board The board to be compressed
  * @param compressed_board A pointer to where the compressed board should be written
  */
-void compress_board(Board_t board, uint8_t compressed_board[])
+void compress_board(Board_t board, Bitmap_t compressed_board)
 {
     for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
         for (uint8_t row = 0; row < BOARD_HEIGHT; row++) {
@@ -94,7 +94,7 @@ void compress_board(Board_t board, uint8_t compressed_board[])
  * @param compressed_board A pointer to the 5 byte compressed board
  * @param board A pointer to a Board_t to overwrite with uncompressed board
  */
-void uncompress_board(const uint8_t compressed_board[], Board_t* board)
+void uncompress_board(const Bitmap_t compressed_board, Board_t* board)
 {
     for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
         for (uint8_t row = 0; row < BOARD_HEIGHT; row++) {

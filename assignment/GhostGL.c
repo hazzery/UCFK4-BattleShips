@@ -54,7 +54,7 @@ void ghostGL_update(void)
  * 
  * @param compressed_board where compressed board data is stored
 */
-void preclear_compress(uint8_t compressed_board[])
+void preclear_compress(Bitmap_t compressed_board)
 {
     compress_board(state_board, compressed_board);
 }
