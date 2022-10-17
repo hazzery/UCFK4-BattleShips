@@ -73,16 +73,15 @@ void swap_board_data(Bitmap_t compressed_board)
     if (is_player_one) {
         // Player1 transfers their board data first...
         for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
-            while (!ir_uart_write_ready_p()) continue;
             ir_uart_putc(compressed_board[col]);
             pacer_wait();
         }
         while (!board_received) {
             // ...then receives the opposition's.
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
-                while (!ir_uart_read_ready_p()) continue;
                 oppositions_compressed_board[col] = ir_uart_getc();
-                pacer_wait();
+                //pacer_wait();
+                led_set(BLUE_LED, HIGH);
             }
             board_received = true;
         }
@@ -90,14 +89,12 @@ void swap_board_data(Bitmap_t compressed_board)
         // Player2 does the exact opposite of Player1
         while (!board_received) {
             for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
-                while (!ir_uart_read_ready_p()) continue;
                 oppositions_compressed_board[col] = ir_uart_getc();
                 pacer_wait();
             }
             board_received = true;
         }
         for (uint8_t col = 0; col < BOARD_WIDTH; col++) {
-            while (!ir_uart_write_ready_p()) continue;
             ir_uart_putc(compressed_board[col]);
             pacer_wait();
         }
