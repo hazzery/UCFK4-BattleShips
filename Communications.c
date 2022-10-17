@@ -61,9 +61,6 @@ void swap_board_data(Bitmap_t compressed_board)
         }
     }
 
-    //uint8_t compressed_board[BOARD_WIDTH];
-    //compress_board(state_board, compressed_board);
-
     Bitmap_t oppositions_compressed_board;
 
     // Slow down pacer for IR communication
