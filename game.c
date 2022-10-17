@@ -29,7 +29,7 @@ typedef enum game_state_e {
 Game_State_t currentState = Placing_Ships;
 
 bool is_player_one = false;
-uint8_t compressed_board[BOARD_WIDTH];
+Bitmap_t compressed_board;
 
 int main (void)
 {
