@@ -146,14 +146,18 @@ static bool place_ship(Ship_t* ship)
 /**
  * @brief Controls the placement of all `NUM_SHIPS` ships
  *
+ * @param reset true to reset ship counter for new game
  * @return `true` if all ships have been placed, otherwise `false`
  */
-bool place_ships(void)
+bool place_ships(bool reset)
 {
     static uint8_t ships_placed = 0;
-
-    // Ship counter is incremented if place_ship returns true
-    ships_placed += place_ship(&(ships[ships_placed]));
+    if (reset) {
+        ships_placed = 0;
+    } else {
+        // Ship counter is incremented if place_ship returns true
+        ships_placed += place_ship(&(ships[ships_placed]));
+    }
 
     return ships_placed == NUM_SHIPS;
 }

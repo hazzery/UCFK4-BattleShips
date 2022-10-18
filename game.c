@@ -52,7 +52,7 @@ int main (void)
 
         switch (currentState) {
             case Placing_Ships:
-                if (place_ships()) {
+                if (place_ships(false)) {
                     preclear_compress(compressed_board);
                     ghostGL_clear();
                     currentState = Initializing;
@@ -113,6 +113,11 @@ int main (void)
                 break;
 
             case Done:
+                if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
+                    ghostGL_clear();
+                    place_ships(true);
+                    currentState = Placing_Ships;
+                }
                 break;
 
             default:

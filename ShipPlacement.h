@@ -15,6 +15,6 @@
  *
  * @return `true` if all ships have been placed, otherwise `false`
  */
-extern bool place_ships(void);
+extern bool place_ships(bool reset);
 
 #endif //ENCE260_ASSIGNMENT_SHIPPLACEMENT_H
