@@ -40,6 +40,6 @@ extern bool all_ships_sunk(void);
 /**
  * @brief Sets number of ships hit to 0
  */
-void reset_shot_count();
+void reset_shot_count(void);
 
 #endif //ENCE260_ASSIGNMENT_TURNEVENTS_H
