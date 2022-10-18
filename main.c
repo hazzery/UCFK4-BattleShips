@@ -1,4 +1,4 @@
-/** @file    game.c
+/** @file    main.c
  *  @authors Harrison Parkes, Dominic Dumble
  *  @date    1st of October 2022
  *  @brief   Battler Ships main loop
