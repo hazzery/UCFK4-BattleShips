@@ -48,15 +48,17 @@ Cell_State_t board_get(Board_t* board, Pos_t pos)
  */
 Pos_t move_to_board(int8_t row, int8_t col)
 {
-    if (row < 0)
+    if (row < 0) {
         row = 0;
-    else if (row > BOARD_HEIGHT - 1)
+    } else if (row > BOARD_HEIGHT - 1) {
         row = BOARD_HEIGHT - 1;
+    }
 
-    if (col < 0)
+    if (col < 0) {
         col = 0;
-    else if(col > BOARD_WIDTH - 1)
+    } else if(col > BOARD_WIDTH - 1) {
         col = BOARD_WIDTH - 1;
+    }
 
     return (Pos_t) {
         .row = row, .col = col
