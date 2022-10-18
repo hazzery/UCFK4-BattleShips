@@ -23,7 +23,7 @@
  * compresses player board and sends to other player before receiving
  * other players board and vice versa if player 2
  */
-extern void swap_board_data(uint8_t compressed_board[]);
+extern void swap_board_data(Bitmap_t compressed_board);
 
 /**
  * @brief Receives status signal from the opposition
