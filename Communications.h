@@ -16,8 +16,6 @@
 #define NEXT_TURN_SIGNAL_P2 'U'
 #define PLAYER1_SIGNAL '1'
 
-#define TRANSFER_FREQUENCY 100
-
 /**
  * @brief player one select and swaps game board information
  *
