@@ -3,19 +3,21 @@
 # Date:   2 Oct 2022
 # Descr:  Makefile for game
 
-BINARY=game.out
+BINARY=main.out
 CODEDIRS=. ../drivers ../drivers/avr ../utils
 INCDIRS=. ../drivers ../drivers/avr ../utils ../fonts
 
 CC=avr-gcc
 OPT=-00
-#DEPFLAGS=-MP -MD
 DEPFLAGS=-MMD
-CFLAGS = -mmcu=atmega32u2 -Os -Wall -Wstrict-prototypes -Wextra -g $(DEPFLAGS) $(foreach Dir,$(INCDIRS),-I$(Dir))
+MMCU=atmega32u2
+CFLAGS = -mmcu=$(MMCU) -Os -Wall -Wstrict-prototypes -Wextra -g $(DEPFLAGS) $(foreach Dir,$(INCDIRS),-I$(Dir))
 
 CFILES=$(foreach Dir,$(CODEDIRS),$(wildcard $(Dir)/*.c))
 OBJECTS=$(patsubst %.c,%.o,$(CFILES))
 DEPFILES=$(patsubst %.c,%.d,$(CFILES))
+
+HEX = $(patsubst %.out,%.hex,$(BINARY))
 
 OBJCOPY = avr-objcopy
 SIZE = avr-size
@@ -36,11 +38,11 @@ $(BINARY): $(OBJECTS)
 # Target: clean project.
 .PHONY: clean
 clean:
-	rm $(OBJECTS) $(DEPFILES)
+	rm $(OBJECTS) $(DEPFILES) $(BINARY) $(HEX)
 
 
-# Target: program project.
+# Target: Flash hex onto board.
 .PHONY: program
 program: $(BINARY)
-	$(OBJCOPY) -O ihex game.out game.hex
-	dfu-programmer atmega32u2 erase; dfu-programmer atmega32u2 flash game.hex; dfu-programmer atmega32u2 start
+	$(OBJCOPY) -O ihex $(BINARY) $(HEX)
+	dfu-programmer $(MMCU) erase; dfu-programmer $(MMCU) flash $(HEX); dfu-programmer $(MMCU) start
