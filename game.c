@@ -116,6 +116,7 @@ int main (void)
                 if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
                     ghostGL_clear();
                     place_ships(true);
+                    reset_shot_count();
                     currentState = Placing_Ships;
                 }
                 break;

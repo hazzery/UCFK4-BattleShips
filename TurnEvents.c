@@ -11,6 +11,7 @@
 #include "Board.h"
 #include "Ship.h"
 #include "game.h"
+
 static int num_hits = 0;
 
 /**
@@ -72,4 +73,12 @@ void fire(Pos_t pos)
 bool all_ships_sunk(void)
 {
     return num_hits == NUM_SHIP_CELLS;
+}
+
+/**
+ * @brief Sets number of ships hit to 0
+ */
+void reset_shot_count()
+{
+    num_hits = 0;
 }
