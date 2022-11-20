@@ -9,7 +9,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "Position.h"
+#include "../common/Position.h"
 
 #define DISPLAY_FREQUENCY 300
 
