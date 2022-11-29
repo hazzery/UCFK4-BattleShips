@@ -4,10 +4,10 @@
  *  @brief   Matrix display graphics
  *  @note    Reads from the ghost and state boards to update the matrix display
 */
-#include "../drivers/display.h"
-#include "game.h"
-#include "GhostGL.h"
-#include "Board.h"
+#include "display.h"
+#include "include/game.h"
+#include "include/GhostGL.h"
+#include "include/Board.h"
 
 #define GHOST_FLASH_TICKS (DISPLAY_FREQUENCY / 4)
 

@@ -5,12 +5,12 @@
  *  @note    All functions implementing the ability to place ships on the game board
 */
 
-#include "../drivers/avr/system.h"
-#include "../drivers/navswitch.h"
-#include "../drivers/button.h"
-#include "ShipPlacement.h"
-#include "Board.h"
-#include "Ship.h"
+#include "avr/system.h"
+#include "navswitch.h"
+#include "button.h"
+#include "include/ShipPlacement.h"
+#include "include/Board.h"
+#include "include/Ship.h"
 
 /**
  * @brief Moves the start position of a ship by a given amount

@@ -10,11 +10,11 @@
 #include "../drivers/button.h"
 #include "../drivers/led.h"
 #include "../utils/pacer.h"
-#include "Communications.h"
-#include "ShipPlacement.h"
-#include "TurnEvents.h"
-#include "GhostGL.h"
-#include "game.h"
+#include "include/Communications.h"
+#include "include/ShipPlacement.h"
+#include "include/TurnEvents.h"
+#include "include/GhostGL.h"
+#include "include/game.h"
 
 typedef enum game_state_e {
     Placing_Ships,

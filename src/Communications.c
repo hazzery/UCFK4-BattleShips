@@ -5,15 +5,15 @@
  *  @note    Implements the IR communications necessary for battleships
 */
 
-#include "../drivers/avr/ir_uart.h"
-#include "../drivers/navswitch.h"
-#include "../drivers/button.h"
-#include "../drivers/led.h"
-#include "../utils/pacer.h"
-#include "Communications.h"
-#include "game.h"
-#include "Board.h"
-#include "GhostGL.h"
+#include "avr/ir_uart.h"
+#include "navswitch.h"
+#include "button.h"
+#include "led.h"
+#include "pacer.h"
+#include "include/Communications.h"
+#include "include/game.h"
+#include "include/Board.h"
+#include "include/GhostGL.h"
 
 extern bool is_player_one;
 extern uint8_t compressed_board;

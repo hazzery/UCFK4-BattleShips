@@ -5,8 +5,8 @@
  *  @note   Ship data structure controlling placement of ships on the display matrix
 */
 
-#include "Ship.h"
-#include "game.h"
+#include "include/Ship.h"
+#include "include/game.h"
 
 Ship_t ships[NUM_SHIPS] = {
     {.length = SHIP1_LENGTH, .placed_horizontally = false},

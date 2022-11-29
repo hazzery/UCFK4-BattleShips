@@ -5,12 +5,12 @@
  *  @note    Functions implementing core events that happen in every turn of battleships
 */
 
-#include "../drivers/navswitch.h"
-#include "../drivers/led.h"
-#include "TurnEvents.h"
-#include "Board.h"
-#include "Ship.h"
-#include "game.h"
+#include "navswitch.h"
+#include "led.h"
+#include "include/TurnEvents.h"
+#include "include/Board.h"
+#include "include/Ship.h"
+#include "include/game.h"
 
 static int num_hits = 0;
 
